@@ -3,7 +3,7 @@ import { useEffect, useId, useRef, useState } from 'react'
 
 export type OrbitRing = { label: string; value: string; unit: string; note?: string }
 
-const SIZE = 176
+const SIZE = 220
 const INSET = 12
 const WIDTH = 9
 const PLATE = INSET + WIDTH + 5
@@ -62,7 +62,7 @@ function OrbitRingItem({ ring, index }: { ring: OrbitRing; index: number }) {
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.5 + index * 0.18, duration: 0.8 }}
-      className="px-1 text-center text-[24px] leading-[1.05] font-semibold tracking-[-0.03em]"
+      className="px-1 text-center text-[32px] leading-[1.05] font-semibold tracking-[-0.03em]"
     >
       {ring.value}
     </motion.span>
@@ -99,8 +99,8 @@ function OrbitRingItem({ ring, index }: { ring: OrbitRing; index: number }) {
         />
         <span
           ref={arc}
-          className="absolute"
-          style={{ inset: INSET, WebkitMask: mask, mask, WebkitMaskComposite: 'source-in', maskComposite: 'intersect' }}
+          className="absolute [mask-composite:intersect] [-webkit-mask-composite:source-in]"
+          style={{ inset: INSET, borderRadius: '50%', WebkitMaskImage: mask, maskImage: mask }}
         />
         <span className="absolute" style={{ inset: INSET, transform: `rotate(${sweep * 360}deg)`, opacity: Math.min(1, sweep * 40) }}>
           <span
@@ -129,17 +129,17 @@ function OrbitRingItem({ ring, index }: { ring: OrbitRing; index: number }) {
         </span>
       </div>
       <div className="min-w-0">
-        <p className="text-[26px] leading-tight font-semibold text-fg">{ring.label}</p>
-        <p className="mt-2 font-mono text-[15px] leading-snug tracking-[0.06em] text-dim uppercase">{ring.unit}</p>
-        {ring.note && <p className="mt-3 text-[17px] leading-snug text-fg/90">{ring.note}</p>}
+        <p className="text-[32px] leading-tight font-semibold text-fg">{ring.label}</p>
+        <p className="mt-2 font-mono text-[18px] leading-snug tracking-[0.06em] text-dim uppercase">{ring.unit}</p>
+        {ring.note && <p className="mt-3 text-[20px] leading-snug text-fg/90">{ring.note}</p>}
       </div>
     </li>
   )
 }
 
-export function OrbitRingStats({ rings }: { rings: OrbitRing[] }) {
+export function OrbitRingStats({ rings, columns = rings.length }: { rings: OrbitRing[]; columns?: number }) {
   return (
-    <ul className="grid gap-x-5" style={{ gridTemplateColumns: `repeat(${rings.length}, minmax(0, 1fr))` }}>
+    <ul className="grid gap-x-5 gap-y-8" style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}>
       {rings.map((ring, i) => (
         <OrbitRingItem key={ring.label} ring={ring} index={i} />
       ))}

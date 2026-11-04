@@ -24,13 +24,13 @@ function CaseStudyTile({ item, featured = false }: { item: CaseStudyBentoItem; f
         featured ? "border-ember/40 p-7 shadow-[0_0_60px_-24px_var(--color-ember)]" : "border-line p-6",
       )}
     >
-      <span className="self-start rounded-full border border-threat/35 bg-threat/10 px-3.5 py-1 font-mono text-[15px] tracking-[0.12em] text-threat uppercase">
+      <span className="self-start rounded-full border border-threat/35 bg-threat/10 px-3.5 py-1.5 font-mono text-[18px] tracking-[0.12em] text-threat uppercase">
         {item.categoria}
       </span>
       <h3
         className={cn(
           "font-semibold tracking-tight text-fg",
-          featured ? "mt-4 text-[64px] leading-[0.95]" : "mt-4 text-[36px] leading-none",
+          featured ? "mt-4 text-[68px] leading-[0.95]" : "mt-4 text-[44px] leading-none",
         )}
       >
         {item.nombre}
@@ -38,7 +38,7 @@ function CaseStudyTile({ item, featured = false }: { item: CaseStudyBentoItem; f
       {item.identificadores && item.identificadores.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-2">
           {item.identificadores.map((id) => (
-            <span key={id} className="rounded-md border border-line bg-ink px-2 py-0.5 font-mono text-[15px] text-ember">
+            <span key={id} className="rounded-md border border-line bg-ink px-2 py-1 font-mono text-[18px] text-ember">
               {id}
             </span>
           ))}
@@ -46,7 +46,7 @@ function CaseStudyTile({ item, featured = false }: { item: CaseStudyBentoItem; f
       )}
       {item.severidad && (
         <div className="mt-4 flex items-center gap-4">
-          <span className={cn("font-mono font-semibold whitespace-nowrap text-threat", featured ? "text-[28px]" : "text-[18px]")}>
+          <span className={cn("font-mono font-semibold whitespace-nowrap text-threat", featured ? "text-[32px]" : "text-[22px]")}>
             {item.severidad}
           </span>
           {featured && Number.isFinite(score) && (
@@ -61,12 +61,12 @@ function CaseStudyTile({ item, featured = false }: { item: CaseStudyBentoItem; f
           )}
         </div>
       )}
-      <p className={cn("leading-snug", featured ? "mt-4 text-[22px] text-fg/90" : "mt-3 text-[20px] text-dim")}>
+      <p className={cn("leading-snug", featured ? "mt-4 text-[26px] text-fg/90" : "mt-3 text-[24px] text-dim")}>
         {item.descripcion}
       </p>
       <ul className={cn("space-y-2", featured ? "mt-4" : "mt-3")}>
         {item.impacto.map((x) => (
-          <li key={x} className={cn("flex gap-3 leading-snug text-fg/90", featured ? "text-[20px]" : "text-[18px]")}>
+          <li key={x} className={cn("flex gap-3 leading-snug text-fg/90", featured ? "text-[22px]" : "text-[20px]")}>
             <span className="mt-[0.5em] size-1.5 shrink-0 rounded-full bg-threat" />
             {x}
           </li>
@@ -77,7 +77,7 @@ function CaseStudyTile({ item, featured = false }: { item: CaseStudyBentoItem; f
           <div
             className={cn(
               "flex items-start gap-3 rounded-2xl border border-defense/25 bg-defense/[0.06] text-fg",
-              featured ? "p-4 text-[20px]" : "p-3.5 text-[18px]",
+              featured ? "p-4 text-[22px]" : "p-3.5 text-[20px]",
             )}
           >
             <ShieldCheck size={featured ? 24 : 20} className="mt-0.5 shrink-0 text-defense" />

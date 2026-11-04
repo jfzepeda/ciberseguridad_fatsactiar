@@ -45,7 +45,7 @@ export function LinearCard({
 
       <div className="relative mb-4 flex items-start justify-between gap-4">
         <span
-          className="inline-flex items-center rounded-full border px-3.5 py-1 font-mono text-[15px] tracking-[0.12em] uppercase"
+          className="inline-flex items-center rounded-full border px-3.5 py-1.5 font-mono text-[18px] tracking-[0.12em] uppercase"
           style={{
             color: THREAT,
             borderColor: `color-mix(in oklab, ${THREAT} 35%, transparent)`,
@@ -54,17 +54,17 @@ export function LinearCard({
         >
           {category}
         </span>
-        <span className="font-mono text-[48px] leading-none font-bold text-transparent" style={{ WebkitTextStroke: `1.5px ${accent}` }}>
+        <span className="font-mono text-[56px] leading-none font-bold text-transparent" style={{ WebkitTextStroke: `1.5px ${accent}` }}>
           {index}
         </span>
       </div>
 
-      <h3 className="relative text-[36px] leading-none font-semibold tracking-tight text-fg">{title}</h3>
+      <h3 className="relative text-[48px] leading-none font-semibold tracking-tight text-fg">{title}</h3>
 
       {identifiers?.length ? (
         <div className="relative mt-3 flex flex-wrap gap-2">
           {identifiers.map((id) => (
-            <span key={id} className="rounded-md border border-line bg-ink px-2 py-0.5 font-mono text-[15px]" style={{ color: accent }}>{id}</span>
+            <span key={id} className="rounded-md border border-line bg-ink px-2 py-1 font-mono text-[18px]" style={{ color: accent }}>{id}</span>
           ))}
         </div>
       ) : null}
@@ -80,7 +80,7 @@ export function LinearCard({
         </ul>
       ) : null}
 
-      <p className="relative mt-3 text-[18px] leading-snug text-fg/90">{description}</p>
+      <p className="relative mt-4 text-[24px] leading-snug text-fg/90">{description}</p>
 
       {steps?.length ? (
         <ol className="relative mt-4 space-y-2">
@@ -98,14 +98,16 @@ export function LinearCard({
         </ol>
       ) : null}
 
-      <ul className="relative mt-auto space-y-1.5 pt-4">
-        {impact.map((x) => (
-          <li key={x} className="flex gap-2.5 text-[15px] leading-snug text-fg/90">
-            <span className="mt-[7px] size-1.5 shrink-0 rounded-full" style={{ background: THREAT }} />
-            {x}
-          </li>
-        ))}
-      </ul>
+      {impact.length > 0 && (
+        <ul className="relative mt-auto space-y-1.5 pt-4">
+          {impact.map((x) => (
+            <li key={x} className="flex gap-2.5 text-[15px] leading-snug text-fg/90">
+              <span className="mt-[7px] size-1.5 shrink-0 rounded-full" style={{ background: THREAT }} />
+              {x}
+            </li>
+          ))}
+        </ul>
+      )}
 
       {note ? <p className="relative mt-3 border-t border-line pt-3 text-[15px] leading-snug text-faint">{note}</p> : null}
     </article>

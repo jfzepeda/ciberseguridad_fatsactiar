@@ -4,8 +4,8 @@ import { cn } from '@/lib/utils'
 
 type OrbitalItem = { id: number; label: string; icon: LucideIcon }
 
-const RADIUS = 190
-const NODE = 52
+const RADIUS = 215
+const NODE = 60
 const STEP = 0.3
 
 export function RadialOrbitalTimeline({
@@ -32,9 +32,9 @@ export function RadialOrbitalTimeline({
 
   return (
     <div className={cn('relative h-full w-full', className)}>
-      <div className="absolute left-1/2 top-1/2 size-[380px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-line" />
+      <div className="absolute left-1/2 top-1/2 size-[430px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-line" />
       <div
-        className="absolute left-1/2 top-1/2 grid size-32 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-ember/40 bg-panel"
+        className="absolute left-1/2 top-1/2 grid size-36 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-ember/40 bg-panel"
         style={{ boxShadow: '0 0 60px -12px var(--color-ember)' }}
       >
         <span className="absolute inset-0 animate-ping rounded-full border border-ember/30" />
