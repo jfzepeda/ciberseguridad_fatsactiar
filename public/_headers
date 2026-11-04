@@ -1,0 +1,5 @@
+/diapositivas/*.yaml
+  Content-Type: text/plain; charset=utf-8
+
+/diapositivas/*.md
+  Content-Type: text/plain; charset=utf-8
