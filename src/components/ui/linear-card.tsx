@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import type { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 
 export type LinearCardProps = {
@@ -11,6 +12,7 @@ export type LinearCardProps = {
   steps?: string[]
   impact: string[]
   note?: string
+  visual?: ReactNode
   accent?: string
   className?: string
 }
@@ -28,6 +30,7 @@ export function LinearCard({
   steps,
   impact,
   note,
+  visual,
   accent = 'var(--color-ember)',
   className,
 }: LinearCardProps) {
@@ -80,7 +83,16 @@ export function LinearCard({
         </ul>
       ) : null}
 
-      <p className="relative mt-4 text-[24px] leading-snug text-fg/90">{description}</p>
+      {visual ? (
+        <div aria-hidden="true" className="relative flex min-h-0 flex-1 items-center justify-center py-8 text-threat/35">
+          {visual}
+        </div>
+      ) : null}
+
+      <p className={cn(
+        'relative mt-4 text-[24px] leading-snug text-fg/90',
+        !impact.length && !details?.length && !steps?.length && 'mt-auto border-t border-line pt-6',
+      )}>{description}</p>
 
       {steps?.length ? (
         <ol className="relative mt-4 space-y-2">

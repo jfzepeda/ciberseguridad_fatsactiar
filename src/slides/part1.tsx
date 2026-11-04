@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import {
-  AlertTriangle, ArrowRight, Check, CircleDot, Minus, Radar, Server, ShieldCheck, Skull, Waypoints, X,
+  AlertTriangle, ArrowRight, Check, CircleDot, Minus, Server, ShieldCheck, Skull, Waypoints, X,
 } from 'lucide-react'
 import { createRef, useMemo, useRef } from 'react'
 import { AnimatedBeam } from '@/components/ui/animated-beam'
@@ -25,27 +25,20 @@ export function Cover() {
     <Slide n={1} part="ps" bg="aurora">
       <div className="grid h-full grid-cols-[1fr_520px] items-center gap-20">
         <div>
-          <Reveal className="mb-8">
-            <Chip color={DEF}>
-              <Radar size={14} /> {s.subtitulo}
-            </Chip>
-          </Reveal>
           <Reveal delay={0.05}>
-            <h1 className="text-[230px] leading-[0.82] font-semibold tracking-[-0.06em] text-fg">
-              {s.titulo.split(' ').map((w, k) => (
-                <span key={w} className="block" style={k ? { color: 'transparent', WebkitTextStroke: '2px var(--color-fg)' } : undefined}>
-                  {w}
-                </span>
-              ))}
+            <h1 className="text-[126px] leading-[0.88] font-semibold tracking-[-0.06em] text-fg">
+              <span className="block">ESCANEO</span>
+              <span className="block text-transparent" style={{ WebkitTextStroke: '2px var(--color-fg)' }}>DE PUERTOS</span>
+              <span className="block text-transparent" style={{ WebkitTextStroke: '2px var(--color-fg)' }}>Y EXPLOTACIÓN</span>
             </h1>
           </Reveal>
-          <Reveal delay={0.25} className="mt-12">
-            <TextShimmer as="p" duration={3} className="font-serif text-[64px] italic [--base-color:#8b8ba3] [--base-gradient-color:#2ee6d6] dark:[--base-color:#8b8ba3] dark:[--base-gradient-color:#2ee6d6]">
+          <Reveal delay={0.2} className="mt-7">
+            <TextShimmer as="p" duration={3} className="font-serif text-[52px] italic [--base-color:#8b8ba3] [--base-gradient-color:#2ee6d6] dark:[--base-color:#8b8ba3] dark:[--base-gradient-color:#2ee6d6]">
               {s.contenido.frase_principal!}
             </TextShimmer>
           </Reveal>
           <Reveal delay={0.35}>
-            <p className="mt-6 max-w-[900px] text-[26px] leading-relaxed text-dim">{s.contenido.introduccion}</p>
+            <p className="mt-4 max-w-[900px] text-[23px] leading-relaxed text-dim">{s.contenido.introduccion}</p>
           </Reveal>
         </div>
 
@@ -92,7 +85,7 @@ export function Doors() {
   ]
   return (
     <Slide n={2} part="ps">
-      <Title kicker={s.subtitulo} title={s.titulo} />
+      <Title title={s.titulo} />
       <div className="grid flex-1 grid-cols-[560px_1fr] gap-16">
         <div className="flex flex-col justify-center gap-10">
           <Reveal delay={0.2}>
@@ -140,7 +133,7 @@ export function HowItWorks() {
   ]
   return (
     <Slide n={3} part="ps">
-      <Title kicker={s.subtitulo} title={s.titulo} />
+      <Title title={s.titulo} />
       <Reveal delay={0.15}>
         <p className="max-w-[1300px] text-[32px] leading-snug text-dim">{s.contenido.definicion}</p>
       </Reveal>
@@ -189,24 +182,24 @@ export function Chain() {
   })
   return (
     <Slide n={4} part="ps">
-      <Title kicker={s.subtitulo} title={s.titulo} className="mb-6" />
+      <Title title={s.titulo} size={78} className="mb-4" />
       <Reveal delay={0.1}>
-        <p className="max-w-[1600px] text-[28px] leading-snug text-dim">{c.concepto}</p>
+        <p className="max-w-[1600px] text-[24px] leading-snug text-dim">{c.concepto}</p>
       </Reveal>
-      <Reveal delay={0.2} className="mt-10">
+      <Reveal delay={0.2} className="mt-6">
         <PinnedSteps steps={steps} />
       </Reveal>
-      <div className="mt-10 grid grid-cols-[1fr_540px] gap-10">
+      <div className="mt-6 grid grid-cols-[1fr_460px] gap-8">
         <Reveal delay={0.8}>
-          <Card glow="color-mix(in oklab, var(--color-threat) 15%, transparent)" className="p-6">
+          <Card glow="color-mix(in oklab, var(--color-threat) 15%, transparent)" className="p-5">
             <div className="mb-4 flex items-center gap-3">
               <Chip color={THREAT}>Ejemplo hipotético</Chip>
             </div>
-            <div className="grid grid-cols-4 gap-6">
+            <div className="grid grid-cols-4 gap-4">
               {exRows.map(([k, v]) => (
                 <div key={k}>
                   <div className="mb-2 font-mono text-[15px] tracking-[0.1em] text-faint uppercase">{k}</div>
-                  <div className="text-[24px] leading-snug text-fg">{v}</div>
+                  <div className="text-[21px] leading-snug text-fg">{v}</div>
                 </div>
               ))}
             </div>
@@ -229,7 +222,7 @@ export function Impact() {
   const c = s.contenido
   return (
     <Slide n={5} part="ps">
-      <Title kicker={s.subtitulo} title={s.titulo} />
+      <Title title={s.titulo} />
       <BentoImpact
         riesgos={c.riesgos!}
         principios={c.principios_afectados as string[]}
@@ -246,7 +239,7 @@ export function ThreeTools() {
   const h = s.contenido.herramientas!
   return (
     <Slide n={6} part="ps" bg="aurora">
-      <Title kicker={s.subtitulo} title={s.titulo} size={150} />
+      <Title title={s.titulo} size={104} className="mb-6" />
       <div className="grid flex-1 grid-cols-3 gap-8">
         {h.map((t, k) => {
           const tool = tools[k]
@@ -278,28 +271,25 @@ function ProductSlide({ n, idx, diagram }: { n: number; idx: number; diagram: Re
   const tool = tools[idx]
   return (
     <Slide n={n} part="ps">
-      <div className="mb-8 flex items-end justify-between gap-10">
-        <div>
-          <Reveal className="mb-5 flex items-center gap-5">
-            <Logo brand={tool.brand} size={44} />
-            <Chip color={tool.color}>{c.categoria}</Chip>
-          </Reveal>
+      <div className="mb-5 flex items-end justify-between gap-8">
+        <div className="flex min-w-0 items-center gap-6">
+          <Reveal className="shrink-0"><Logo brand={tool.brand} size={54} /></Reveal>
           <Reveal delay={0.05}>
-            <h2 className="text-[88px] leading-none font-semibold tracking-[-0.035em] text-fg">{s.titulo}</h2>
+            <h2 className="text-[64px] leading-none font-semibold tracking-[-0.035em] text-fg">{s.titulo}</h2>
           </Reveal>
         </div>
         <Reveal delay={0.12}>
-          <p className="max-w-[820px] text-right font-serif text-[46px] leading-tight italic" style={{ color: tool.color }}>{s.subtitulo}</p>
+          <p className="max-w-[720px] text-right font-serif text-[34px] leading-tight italic" style={{ color: tool.color }}>{s.subtitulo}</p>
         </Reveal>
       </div>
 
-      <div className="grid flex-1 grid-cols-[1fr_600px_1fr] gap-8">
-        <Reveal delay={0.2}>
+      <div className="grid min-h-0 flex-1 grid-cols-[1fr_540px_1fr] gap-6">
+        <Reveal delay={0.2} className="min-h-0">
           <GradientCard accent={tool.color} badge="Cómo funciona" className="h-full">
-            <p className="mb-6 text-[24px] leading-snug font-medium text-fg">{c.funcion_principal}</p>
-            <ol className="space-y-4">
+            <p className="mb-4 text-[21px] leading-snug font-medium text-fg">{c.funcion_principal}</p>
+            <ol className="space-y-2.5">
               {c.funcionamiento!.map((x, k) => (
-                <li key={x.paso} className="flex gap-4 text-[22px] leading-snug text-fg">
+                <li key={x.paso} className="flex gap-4 text-[19px] leading-snug text-fg">
                   <span className="mt-0.5 font-mono text-[16px]" style={{ color: tool.color }}>0{k + 1}</span>
                   {x.descripcion}
                 </li>
@@ -307,32 +297,32 @@ function ProductSlide({ n, idx, diagram }: { n: number; idx: number; diagram: Re
             </ol>
           </GradientCard>
         </Reveal>
-        <Reveal delay={0.3}>
+        <Reveal delay={0.3} className="min-h-0">
           <div className="relative h-full overflow-hidden rounded-3xl border border-line bg-ink/80">{diagram}</div>
         </Reveal>
-        <Reveal delay={0.4} className="flex flex-col gap-5">
-          <GradientCard accent={tool.color} badge="Capacidades" className="flex-1 p-6">
-            <ul className="space-y-2.5">
+        <Reveal delay={0.4} className="flex min-h-0 flex-col gap-4">
+          <GradientCard accent={tool.color} badge="Capacidades" className="min-h-0 flex-1 p-4">
+            <ul className="space-y-1.5">
               {c.capacidades!.map((x) => (
-                <li key={x} className="flex items-start gap-3 text-[22px] leading-snug text-fg">
-                  <Check size={20} className="mt-1.5 shrink-0" style={{ color: tool.color }} /> {x}
+                <li key={x} className="flex items-start gap-3 text-[18px] leading-snug text-fg">
+                  <Check size={17} className="mt-1 shrink-0" style={{ color: tool.color }} /> {x}
                 </li>
               ))}
             </ul>
           </GradientCard>
-          <Card glow="color-mix(in oklab, var(--color-threat) 14%, transparent)" className="p-6">
-            <h3 className="mb-4 font-mono text-[15px] tracking-[0.22em] text-threat/80 uppercase">Limitaciones</h3>
-            <ul className="space-y-2">
+          <Card glow="color-mix(in oklab, var(--color-threat) 14%, transparent)" className="shrink-0 p-4">
+            <h3 className="mb-3 font-mono text-[14px] tracking-[0.22em] text-threat/80 uppercase">Limitaciones</h3>
+            <ul className="space-y-1.5">
               {(c.limitaciones as string[]).map((x) => (
-                <li key={x} className="flex items-start gap-3 text-[22px] leading-snug text-dim">
-                  <Minus size={20} className="mt-1.5 shrink-0 text-threat/80" /> {x}
+                <li key={x} className="flex items-start gap-3 text-[18px] leading-snug text-dim">
+                  <Minus size={17} className="mt-1 shrink-0 text-threat/80" /> {x}
                 </li>
               ))}
             </ul>
           </Card>
         </Reveal>
       </div>
-      <KeyMessage color={tool.color} delay={0.7} className="mt-8">{c.mensaje_clave}</KeyMessage>
+      <KeyMessage color={tool.color} delay={0.7} className="mt-5">{c.mensaje_clave}</KeyMessage>
     </Slide>
   )
 }
@@ -465,7 +455,7 @@ export function Compare() {
   const msg = c.mensaje_clave!.split(/(Cisco|Rapid7|Nessus)/)
   return (
     <Slide n={10} part="ps">
-      <Title kicker={s.subtitulo} title={s.titulo} className="mb-4" />
+      <Title title={s.titulo} className="mb-4" />
       <Reveal delay={0.15} className="mb-6">
         <p className="text-[24px] leading-snug text-dim">{c.introduccion}</p>
       </Reveal>
@@ -530,7 +520,7 @@ export function Scenario() {
   const ns = useRef<HTMLDivElement>(null)
   return (
     <Slide n={11} part="ps">
-      <Title kicker={s.subtitulo} title={s.titulo} className="mb-6" />
+      <Title title={s.titulo} className="mb-6" />
       <div className="grid grid-cols-[600px_1fr] gap-10">
         <Reveal delay={0.15} className="flex flex-col justify-center gap-6">
           <div>
@@ -578,7 +568,7 @@ export function Scenario() {
         ))}
       </div>
       <Reveal delay={0.8} className="mt-5">
-        <p className="text-[16px] text-faint">* {c.aclaracion}</p>
+        <p className="text-[16px] text-dim">* {c.aclaracion}</p>
       </Reveal>
       <KeyMessage delay={0.9} className="mt-auto">{c.mensaje_clave}</KeyMessage>
     </Slide>
@@ -613,7 +603,7 @@ export function Depth() {
           </div>
         </Reveal>
         <div className="flex flex-col">
-          <Title kicker={s.subtitulo} title={s.titulo} size={96} className="mb-6" />
+          <Title title={s.titulo} size={84} className="mb-5" />
           <div className="flex flex-col gap-3">
             {layers.map((l, k) => (
               <Reveal key={l.nombre} delay={0.25 + k * 0.1}>
@@ -644,7 +634,7 @@ export function Takeaway() {
   })()
   return (
     <Slide n={13} part="ps" bg="aurora">
-      <Title kicker={s.subtitulo} title={s.titulo} size={64} className="mb-8" />
+      <Title title={s.titulo} size={64} className="mb-8" />
       <div className="grid grid-cols-3 gap-x-10 gap-y-4">
         {c.conclusiones!.map((x, k) => (
           <Reveal key={x} delay={0.15 + k * 0.06}>

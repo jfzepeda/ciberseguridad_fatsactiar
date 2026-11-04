@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Bot, ExternalLink, KeyRound, LifeBuoy, Package, Radar, RefreshCw, ShieldCheck, ShieldMinus } from 'lucide-react'
+import { Bot, Cpu, ExternalLink, KeyRound, LifeBuoy, Package, Radar, RefreshCw, ShieldCheck, ShieldMinus, Terminal } from 'lucide-react'
 import { BorderBeam } from '@/components/ui/border-beam'
 import { TextShimmer } from '@/components/ui/text-shimmer'
 import { Card, KeyMessage, P, Reveal, S, Slide, Title } from '@/kit'
@@ -100,7 +100,7 @@ export function Breaches() {
   const brechas = c.incidentes as unknown as Breach[]
   return (
     <Slide n={15} part="bo">
-      <Title kicker={s.subtitulo} title={s.titulo} size={62} className="mb-3" />
+      <Title title={s.titulo} size={62} className="mb-3" />
       <Reveal delay={0.15} className="mb-6">
         <OrbitRingStats columns={2} rings={brechas.map((x, k) => ({
           label: x.empresa,
@@ -125,11 +125,11 @@ export function SixMore() {
   const c = s.contenido
   return (
     <Slide n={16} part="bo">
-      <Title kicker={s.subtitulo} title={s.titulo} size={72} className="mb-4" />
+      <Title title={s.titulo} size={72} className="mb-4" />
       <div className="mt-6">
         <SystemStatusBlock
           accent={EMBER}
-          items={incidents.map((x) => ({ title: x.empresa, date: x.fecha, label: x.categoria, detail: x.riesgo }))}
+          items={incidents.map((x) => ({ title: x.empresa, date: `${x.fecha.slice(-2)} OCT`, label: x.categoria, detail: x.riesgo }))}
         />
       </div>
       <KeyMessage color={EMBER} delay={1.2} className="mt-6">{c.mensaje_clave}</KeyMessage>
@@ -148,7 +148,7 @@ export function Vulns() {
   }
   return (
     <Slide n={17} part="bo">
-      <Title kicker={s.subtitulo} title={s.titulo} size={72} className="mb-4" />
+      <Title title={s.titulo} size={72} className="mb-4" />
       <div className="grid flex-1 grid-cols-3 gap-6">
         {(c.vulnerabilidades as unknown as Vuln[]).map((v, k) => (
           <Reveal key={v.nombre} delay={0.2 + k * 0.12} className="flex h-full min-h-0 flex-col">
@@ -158,6 +158,7 @@ export function Vulns() {
               title={v.nombre}
               identifiers={v.identificadores}
               description={summaries[v.nombre] ?? v.descripcion}
+              visual={[<Terminal key="terminal" size={132} strokeWidth={1.1} />, <Cpu key="cpu" size={132} strokeWidth={1.1} />, <KeyRound key="key" size={132} strokeWidth={1.1} />][k]}
               impact={[]}
             />
           </Reveal>
@@ -184,7 +185,7 @@ export function MoreFlaws() {
   }))
   return (
     <Slide n={18} part="bo">
-      <Title kicker={s.subtitulo} title={s.titulo} size={72} className="mb-3" />
+      <Title title={s.titulo} size={72} className="mb-3" />
       <Reveal delay={0.2} className="flex min-h-0 flex-1 flex-col">
         <CaseStudyBento featured={first} items={[second, third]} />
       </Reveal>
@@ -210,7 +211,7 @@ export function AISpeed() {
   ]
   return (
     <Slide n={19} part="bo">
-      <Title kicker={s.subtitulo} title={s.titulo} size={56} className="mb-3" />
+      <Title title={s.titulo} size={56} className="mb-3" />
       <BentoGrid01
         className="flex-1"
         cells={[{
@@ -262,7 +263,7 @@ export function Lessons() {
   const lecciones = c.aprendizajes!.map((l, k) => ({ id: k + 1, label: l.titulo, icon: lessonIcons[k] ?? ShieldCheck }))
   return (
     <Slide n={20} part="bo" bg="aurora">
-      <Title kicker={s.subtitulo} title={s.titulo} size={72} className="mb-5" />
+      <Title title={s.titulo} size={72} className="mb-5" />
       <div className="grid min-h-0 flex-1 grid-cols-[560px_minmax(0,1fr)] gap-12">
         <Reveal delay={0.2} className="h-full">
           <RadialOrbitalTimeline
@@ -314,26 +315,27 @@ export function Sources() {
   const c = s.contenido
   const cols: [string, Ref[], string][] = [
     ['Escaneo de puertos', c.escaneo_de_puertos!, DEF],
-    ['Black October', c.black_october!, EMBER],
+    ['Black October · incidentes', c.black_october!.slice(0, 4), EMBER],
+    ['Black October · vulnerabilidades', c.black_october!.slice(4), EMBER],
     ['Seguridad e IA', c.seguridad_e_inteligencia_artificial!, 'var(--color-assess)'],
   ]
   return (
     <Slide n={21} part="bo" label={s.titulo}>
       <Title title={s.titulo} size={88} className="mb-8" />
-      <div className="grid flex-1 grid-cols-3 gap-10">
+      <div className="grid flex-1 grid-cols-4 gap-8">
         {cols.map(([name, refs, col], ci) => (
           <Reveal key={name} delay={0.15 + ci * 0.1}>
             <h3 className="mb-5 flex items-center gap-3 font-mono text-[15px] tracking-[0.22em] uppercase" style={{ color: col }}>
               <span className="h-px w-8" style={{ background: col }} /> {name}
             </h3>
-            <ul className="space-y-3.5">
+            <ul className="space-y-4">
               {refs.map((r) => (
                 <li key={r.fuente + (r.url ?? r.tema)} className="border-b border-line/70 pb-3">
-                  <div className="text-[18px] font-medium text-fg">{r.fuente}</div>
-                  {r.tema && <div className="text-[15px] text-dim">{r.tema}</div>}
+                  <div className="text-[20px] font-medium text-fg">{r.fuente}</div>
+                  {r.tema && <div className="text-[16px] leading-snug text-dim">{r.tema}</div>}
                   {r.url && (
-                    <a href={r.url} target="_blank" rel="noreferrer" className="mt-0.5 flex items-center gap-1.5 truncate font-mono text-[12.5px] text-faint hover:text-fg">
-                      <ExternalLink size={12} className="shrink-0" /> {r.url.replace(/^https?:\/\//, '')}
+                    <a href={r.url} target="_blank" rel="noreferrer" className="mt-1 flex items-center gap-1.5 truncate font-mono text-[14px] text-dim hover:text-fg">
+                      <ExternalLink size={14} className="shrink-0" /> {r.url.replace(/^https?:\/\//, '')}
                     </a>
                   )}
                 </li>
@@ -343,7 +345,7 @@ export function Sources() {
         ))}
       </div>
       <Reveal delay={0.6}>
-        <p className="mt-6 text-[16px] text-faint">* {P.nota_de_verificacion}</p>
+        <p className="mt-6 text-[18px] leading-snug text-dim">* {P.nota_de_verificacion}</p>
       </Reveal>
     </Slide>
   )

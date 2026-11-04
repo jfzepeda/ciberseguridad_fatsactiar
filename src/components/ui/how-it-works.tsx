@@ -6,8 +6,8 @@ export interface PinnedStep {
   color: string
 }
 
-const CARD_H = 216
-const DROP = 110
+const CARD_H = 184
+const DROP = 80
 const LANE_H = CARD_H + DROP
 const CARD_W = 0.84
 const DASH = 14

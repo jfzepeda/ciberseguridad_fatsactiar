@@ -78,12 +78,9 @@ export function Slide({
   )
 }
 
-export function Title({ kicker, title, sub, size = 96, className }: { kicker?: string; title: string; sub?: string; size?: number; className?: string }) {
+export function Title({ title, sub, size = 96, className }: { title: string; sub?: string; size?: number; className?: string }) {
   return (
     <div className={cn('mb-10', className)}>
-      {kicker && (
-        <Reveal className="mb-4 font-mono text-[16px] uppercase tracking-[0.28em] text-dim">{kicker}</Reveal>
-      )}
       <Reveal delay={0.05}>
         <h2 className="text-balance font-semibold leading-[0.95] tracking-[-0.035em] text-fg" style={{ fontSize: size }}>
           {title}
