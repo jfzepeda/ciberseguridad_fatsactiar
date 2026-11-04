@@ -1,0 +1,32 @@
+numero: 9
+tipo: solucion
+titulo: TENABLE NESSUS
+subtitulo: Identificar exactamente qué está expuesto
+contenido:
+  empresa: Tenable
+  producto: Nessus
+  categoria: Escáner de vulnerabilidades
+  funcion_principal: Examinar sistemas autorizados para descubrir servicios accesibles, vulnerabilidades conocidas
+    y configuraciones inseguras.
+  funcionamiento:
+  - paso: 1
+    descripcion: Escanea los puertos de los dispositivos seleccionados.
+  - paso: 2
+    descripcion: Identifica los servicios y las tecnologías disponibles.
+  - paso: 3
+    descripcion: Ejecuta comprobaciones mediante plugins de detección de vulnerabilidades.
+  - paso: 4
+    descripcion: Clasifica los hallazgos y presenta recomendaciones de corrección.
+  capacidades:
+  - Escaneo configurable de puertos TCP y UDP
+  - Identificación de servicios y versiones
+  - Evaluaciones autenticadas y no autenticadas
+  - Detección basada en plugins
+  - Clasificación de vulnerabilidades por severidad
+  - Recomendaciones de remediación
+  limitaciones:
+  - No bloquea automáticamente los ataques entrantes.
+  - Las evaluaciones sin credenciales pueden tener visibilidad limitada.
+  - Los escaneos intensivos pueden afectar sistemas sensibles.
+  - Los hallazgos requieren validación y corrección.
+  mensaje_clave: Nessus permite conocer qué servicios están expuestos y qué vulnerabilidades presentan.

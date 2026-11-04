@@ -1,16 +1,24 @@
 import { motion } from 'framer-motion'
 import {
-  Bot, Cpu, ExternalLink, KeyRound, LifeBuoy, Package, Radar, RefreshCw, ShieldCheck, ShieldMinus, TriangleAlert, Zap,
+  Bot, Cpu, ExternalLink, KeyRound, LifeBuoy, Package, Radar, RefreshCw, ShieldCheck, ShieldMinus,
 } from 'lucide-react'
 import { BorderBeam } from '@/components/ui/border-beam'
 import { TextShimmer } from '@/components/ui/text-shimmer'
 import { Card, Chip, KeyMessage, P, Reveal, S, Slide, Title } from '@/kit'
+import { SystemStatusBlock } from '@/components/ui/system-status-block'
+import { LinearCard } from '@/components/ui/linear-card'
+import { RadialOrbitalTimeline } from '@/components/ui/radial-orbital-timeline'
+import { OrbitRingStats } from '@/components/ui/orbit-ring-stats'
+import { useState } from 'react'
+import { BentoGrid01 } from '@/components/ui/bento-grid-01'
+import { Mail, Unlock } from 'lucide-react'
+import { CaseStudyBento } from '@/components/ui/casestudy-bento'
 
 const A = S.slice(13)
 const EMBER = 'var(--color-ember)'
 const THREAT = 'var(--color-threat)'
 const DEF = 'var(--color-defense)'
-const GLOW = '#ff8a3d26'
+const GLOW = 'color-mix(in oklab, var(--color-ember) 15%, transparent)'
 
 // contenido.json slides have heterogeneous shapes; name the ones we read.
 type Breach = { empresa: string; metrica_principal: string; unidad: string; que_paso: string; datos: string[]; impacto: string; consecuencia?: string; aclaracion?: string }
@@ -103,25 +111,23 @@ export function BOCover() {
 export function Breaches() {
   const s = A[1]
   const c = s.contenido
+  const brechas = c.incidentes as unknown as Breach[]
   return (
     <Slide n={15} part="bo">
       <Title kicker={s.subtitulo} title={s.titulo} size={62} className="mb-3" />
       <Reveal delay={0.1}>
         <p className="mb-6 max-w-[1500px] text-[22px] text-dim">{c.introduccion}</p>
       </Reveal>
+      <Reveal delay={0.15} className="mb-6">
+        <OrbitRingStats rings={brechas.map((x) => ({ label: x.empresa, value: x.metrica_principal, unit: x.unidad, note: x.que_paso }))} />
+      </Reveal>
       <div className="grid flex-1 grid-cols-4 gap-5">
-        {(c.incidentes as unknown as Breach[]).map((x, k) => {
+        {brechas.map((x, k) => {
           const note = x.consecuencia ?? x.aclaracion
           const fatal = !!x.consecuencia
           return (
             <Reveal key={x.empresa} delay={0.2 + k * 0.1}>
               <Card glow={GLOW} className="flex h-full flex-col p-7">
-                <div className="mb-1 text-[26px] font-semibold text-fg">{x.empresa}</div>
-                <div className="bg-gradient-to-br from-ember to-threat bg-clip-text text-[52px] leading-tight font-semibold tracking-[-0.04em] text-transparent">
-                  {x.metrica_principal}
-                </div>
-                <div className="mb-4 font-mono text-[13px] tracking-[0.14em] text-dim uppercase">{x.unidad}</div>
-                <p className="mb-3 text-[17px] leading-snug text-fg">{x.que_paso}</p>
                 <ul className="mb-3 space-y-1.5">
                   {x.datos.map((d) => (
                     <li key={d} className="flex gap-2.5 text-[15px] leading-snug text-dim">
@@ -134,7 +140,7 @@ export function Breaches() {
                   {x.impacto}
                 </p>
                 {note && (
-                  <p className={`mt-3 rounded-xl px-3 py-2 text-[15px] leading-snug ${fatal ? 'bg-threat/15 font-medium text-threat' : 'bg-white/[0.03] text-faint'}`}>{note}</p>
+                  <p className={`mt-3 rounded-xl px-3 py-2 text-[15px] leading-snug ${fatal ? 'bg-threat/15 font-medium text-threat' : 'bg-fg/[0.03] text-faint'}`}>{note}</p>
                 )}
               </Card>
             </Reveal>
@@ -146,52 +152,26 @@ export function Breaches() {
   )
 }
 
-/* 16 — Six more platforms (timeline) */
+/* 16 — Six more platforms (status block) */
 export function SixMore() {
   const s = A[2]
   const c = s.contenido
   return (
     <Slide n={16} part="bo">
-      <Title kicker={s.subtitulo} title={s.titulo} size={80} className="mb-4" />
+      <Title kicker={s.subtitulo} title={s.titulo} size={72} className="mb-4" />
       <Reveal delay={0.1}>
-        <p className="max-w-[1400px] text-[24px] text-dim">{c.introduccion}</p>
+        <p className="max-w-[1600px] text-[22px] text-dim">{c.introduccion}</p>
       </Reveal>
-      <div className="relative mt-10">
-        <motion.div
-          className="absolute top-[34px] left-0 h-px bg-gradient-to-r from-ember via-threat to-ember"
-          initial={{ width: 0 }}
-          animate={{ width: '100%' }}
-          transition={{ delay: 0.3, duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+      <div className="mt-6">
+        <SystemStatusBlock
+          accent={EMBER}
+          items={incidents.map((x) => ({ title: x.empresa, date: x.fecha, label: x.categoria, detail: x.incidente, risk: x.riesgo }))}
         />
-        <div className="grid grid-cols-6 items-stretch gap-5">
-          {incidents.map((x, k) => (
-            <Reveal key={x.empresa} delay={0.4 + k * 0.12} className="flex flex-col">
-              <div className="mb-6 flex items-center gap-3">
-                <span className="relative flex size-4">
-                  <span className="absolute inset-0 animate-pulse-ring rounded-full bg-ember" />
-                  <span className="relative size-4 rounded-full border-2 border-ink bg-ember" />
-                </span>
-                <span className="font-mono text-[22px] font-medium text-fg">
-                  {x.fecha.slice(-2)} <span className="text-dim">OCT</span>
-                </span>
-              </div>
-              <Card glow={GLOW} className="flex-1 p-6">
-                <div className="mb-2 text-[26px] font-semibold tracking-tight text-fg">{x.empresa}</div>
-                <div className="mb-4 font-mono text-[12px] leading-snug tracking-[0.12em] text-ember uppercase">{x.categoria}</div>
-                <p className="mb-4 text-[17px] leading-snug text-fg/90">{x.incidente}</p>
-                <p className="text-[15px] leading-snug text-dim">
-                  <TriangleAlert size={15} className="mr-1.5 inline -translate-y-px text-threat" />
-                  {x.riesgo}
-                </p>
-              </Card>
-            </Reveal>
-          ))}
-        </div>
       </div>
-      <Reveal delay={1.1} className="mt-8 flex flex-wrap items-center gap-3">
-        <span className="mr-2 font-mono text-[14px] tracking-[0.2em] text-dim uppercase">Patrón común</span>
+      <Reveal delay={1.1} className="mt-5 flex flex-wrap items-center gap-3">
+        <span className="mr-2 font-mono text-[15px] tracking-[0.2em] text-dim uppercase">Patrón común</span>
         {c.patrones_comunes!.map((p) => (
-          <Chip key={p} color={THREAT} className="normal-case tracking-normal text-[16px]">{p}</Chip>
+          <Chip key={p} color={THREAT} className="normal-case tracking-normal text-[18px]">{p}</Chip>
         ))}
       </Reveal>
       <KeyMessage color={EMBER} delay={1.2} className="mt-6">{c.mensaje_clave}</KeyMessage>
@@ -205,53 +185,26 @@ export function Vulns() {
   const c = s.contenido
   return (
     <Slide n={17} part="bo">
-      <Title kicker={s.subtitulo} title={s.titulo} size={80} className="mb-4" />
+      <Title kicker={s.subtitulo} title={s.titulo} size={72} className="mb-4" />
       <Reveal delay={0.1}>
         <p className="mb-5 max-w-[1500px] text-[21px] text-dim">{c.introduccion}</p>
       </Reveal>
       <div className="grid flex-1 grid-cols-3 gap-6">
-        {(c.vulnerabilidades as unknown as Vuln[]).map((v, k) => {
-          const ids = v.identificadores
-          const datos = v.datos
-          const foot = v.alcance ?? v.respuesta
-          return (
-            <Reveal key={v.nombre} delay={0.2 + k * 0.12}>
-              <Card glow={GLOW} className="flex h-full flex-col p-7">
-                <Chip color={THREAT} className="mb-3 self-start text-[12px]">{v.categoria}</Chip>
-                <h3 className="mb-2 text-[34px] leading-none font-semibold tracking-tight text-fg">{v.nombre}</h3>
-                <div className="mb-2 flex flex-wrap gap-2">
-                  {ids?.map((id) => (
-                    <span key={id} className="rounded-md border border-line bg-ink px-2 py-0.5 font-mono text-[14px] text-ember">{id}</span>
-                  ))}
-                  {datos && (
-                    <div className="flex items-center gap-1.5">
-                      {Array.from({ length: 8 }, (_, i) => (
-                        <span key={i} className={`size-[18px] rounded-[5px] ${i < 6 ? 'bg-ember' : 'bg-threat'}`} />
-                      ))}
-                    </div>
-                  )}
-                </div>
-                {datos && <p className="mb-2 font-mono text-[13px] leading-relaxed text-dim">{datos.join(' · ')}</p>}
-                <p className="mb-3 text-[16px] leading-snug text-fg/90">{v.descripcion}</p>
-                <div className="mb-3 space-y-0">
-                  {v.mecanismo?.map((m, i) => (
-                    <div key={m} className="relative flex gap-3 pb-2">
-                      {i < 2 && <span className="absolute top-6 left-[11px] h-[calc(100%-18px)] w-px bg-line" />}
-                      <span className="grid size-6 shrink-0 place-items-center rounded-full border border-ember/50 font-mono text-[12px] text-ember">{i + 1}</span>
-                      <span className="text-[15px] leading-snug text-dim">{m}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-auto flex flex-wrap gap-2">
-                  {v.impacto.map((x) => (
-                    <span key={x} className="rounded-full bg-threat/10 px-3 py-1 text-[14px] text-threat">{x}</span>
-                  ))}
-                </div>
-                {foot && <p className="mt-3 border-t border-line pt-3 text-[14px] leading-snug text-faint">{foot}</p>}
-              </Card>
-            </Reveal>
-          )
-        })}
+        {(c.vulnerabilidades as unknown as Vuln[]).map((v, k) => (
+          <Reveal key={v.nombre} delay={0.2 + k * 0.12} className="flex h-full min-h-0 flex-col">
+            <LinearCard
+              index={String(k + 1).padStart(2, '0')}
+              category={v.categoria}
+              title={v.nombre}
+              identifiers={v.identificadores}
+              description={v.descripcion}
+              details={v.datos}
+              steps={v.mecanismo}
+              impact={v.impacto}
+              note={v.alcance ?? v.respuesta}
+            />
+          </Reveal>
+        ))}
       </div>
       <KeyMessage color={EMBER} delay={0.8} className="mt-6">{c.mensaje_clave}</KeyMessage>
     </Slide>
@@ -262,58 +215,16 @@ export function Vulns() {
 export function MoreFlaws() {
   const s = A[4]
   const c = s.contenido
+  const [first, second, third] = c.vulnerabilidades as unknown as Vuln[]
   return (
     <Slide n={18} part="bo">
       <Title kicker={s.subtitulo} title={s.titulo} size={72} className="mb-3" />
       <Reveal delay={0.1}>
         <p className="mb-5 text-[22px] text-dim">{c.introduccion}</p>
       </Reveal>
-      <div className="flex flex-col gap-4">
-        {(c.vulnerabilidades as unknown as Vuln[]).map((v, k) => {
-          const sev = v.severidad ?? ''
-          const cvss = parseFloat(sev.replace(/[^\d.]/g, ''))
-          return (
-            <Reveal key={v.nombre} delay={0.2 + k * 0.12}>
-              <Card glow={GLOW} className="grid grid-cols-[400px_1fr_400px] items-center gap-10 px-7 py-5">
-                <div>
-                  <div className="mb-3 flex items-center gap-3">
-                    <Chip color={THREAT} className="text-[12px]">{v.categoria}</Chip>
-                  </div>
-                  <h3 className="mb-3 text-[32px] leading-none font-semibold tracking-tight text-fg">{v.nombre}</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {v.identificadores?.map((id) => (
-                      <span key={id} className="rounded-md border border-line bg-ink px-2 py-0.5 font-mono text-[14px] text-ember">{id}</span>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <div className="mb-3 flex items-center gap-4">
-                    <span className="font-mono text-[22px] font-semibold text-threat">{sev}</span>
-                    <div className="h-2 flex-1 overflow-hidden rounded-full bg-line">
-                      <motion.div
-                        className="h-full rounded-full bg-gradient-to-r from-ember to-threat"
-                        initial={{ width: 0 }}
-                        animate={{ width: `${Number.isFinite(cvss) ? cvss * 10 : 100}%` }}
-                        transition={{ delay: 0.6 + k * 0.15, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                      />
-                    </div>
-                  </div>
-                  <p className="mb-3 text-[19px] leading-snug text-fg/90">{v.descripcion}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {v.impacto.map((x) => (
-                      <span key={x} className="rounded-full bg-threat/10 px-3 py-1 text-[14px] text-threat">{x}</span>
-                    ))}
-                  </div>
-                </div>
-                <div className="flex items-start gap-4 rounded-2xl border border-defense/25 bg-defense/[0.06] p-5">
-                  <ShieldCheck size={28} className="shrink-0 text-defense" />
-                  <p className="text-[18px] leading-snug text-fg">{v.mitigacion}</p>
-                </div>
-              </Card>
-            </Reveal>
-          )
-        })}
-      </div>
+      <Reveal delay={0.2} className="flex min-h-0 flex-1 flex-col">
+        <CaseStudyBento featured={first} items={[second, third]} />
+      </Reveal>
       <KeyMessage color={EMBER} delay={0.8} className="mt-6">{c.mensaje_clave}</KeyMessage>
     </Slide>
   )
@@ -321,6 +232,7 @@ export function MoreFlaws() {
 
 /* 19 — AI speed */
 type Fase = { fase: string; actividad: string }
+const riesgoIcons = [Unlock, Mail, Radar, KeyRound]
 
 export function AISpeed() {
   const s = A[5]
@@ -334,59 +246,92 @@ export function AISpeed() {
       <Reveal delay={0.1}>
         <p className="mb-6 max-w-[1500px] text-[22px] text-dim">{c.introduccion}</p>
       </Reveal>
-      <div className="grid grid-cols-[1fr_620px] gap-8">
-        <Reveal delay={0.2}>
-          <div className="rounded-3xl border border-line bg-panel/70 p-6">
-            <div className="mb-3 grid grid-cols-[220px_1fr_1fr] gap-5 font-mono text-[13px] tracking-[0.2em] uppercase">
-              <span className="text-faint">Fase</span>
-              <span className="text-dim">Ataque tradicional</span>
-              <span className="text-ember">Ataque asistido por IA</span>
-            </div>
-            {trad.map((t, k) => (
-              <div key={t.fase} className="grid grid-cols-[220px_1fr_1fr] gap-5 border-t border-line py-3.5">
-                <span className="text-[19px] font-semibold text-fg">{t.fase}</span>
-                <div>
-                  <p className="mb-2 text-[15px] leading-snug text-dim">{t.actividad}</p>
-                  <div className="h-1.5 overflow-hidden rounded-full bg-line">
-                    <motion.div className="h-full rounded-full bg-dim/60" initial={{ width: 0 }} animate={{ width: '100%' }} transition={{ delay: 0.5 + k * 0.1, duration: 4, ease: 'linear' }} />
+      <BentoGrid01
+        className="flex-1"
+        cells={[
+          {
+            id: 'fases',
+            span: 'col-span-6 row-span-2',
+            color: EMBER,
+            delay: 0.1,
+            children: (
+              <div className="grid flex-1 grid-cols-4 gap-4">
+                {trad.map((t, k) => (
+                  <div key={t.fase} className="flex flex-col">
+                    <div className="mb-3 text-[20px] leading-tight font-semibold text-fg">{t.fase}</div>
+                    <div className="mb-3">
+                      <div className="mb-1 font-mono text-[15px] tracking-[0.14em] text-dim uppercase">Tradicional</div>
+                      <p className="text-[17px] leading-snug text-dim">{t.actividad}</p>
+                      <div className="mt-2 h-1 overflow-hidden rounded-full bg-line">
+                        <motion.div className="h-full rounded-full bg-dim/60" initial={{ width: 0 }} animate={{ width: '100%' }} transition={{ delay: 0.5 + k * 0.1, duration: 4, ease: 'linear' }} />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="mb-1 font-mono text-[15px] tracking-[0.14em] text-ember uppercase">Asistido por IA</div>
+                      <p className="text-[17px] leading-snug text-fg/90">{ai[k].actividad}</p>
+                      <div className="mt-2 h-1 overflow-hidden rounded-full bg-line">
+                        <motion.div className="h-full rounded-full bg-gradient-to-r from-ember to-threat" initial={{ width: 0 }} animate={{ width: '100%' }} transition={{ delay: 0.5 + k * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }} />
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <p className="mb-2 text-[15px] leading-snug text-fg/90">{ai[k].actividad}</p>
-                  <div className="h-1.5 overflow-hidden rounded-full bg-line">
-                    <motion.div className="h-full rounded-full bg-gradient-to-r from-ember to-threat" initial={{ width: 0 }} animate={{ width: '100%' }} transition={{ delay: 0.5 + k * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }} />
-                  </div>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </Reveal>
-        <div className="grid grid-cols-2 gap-4">
-          {c.riesgos!.map((r, k) => (
-            <Reveal key={r.nombre} delay={0.3 + k * 0.08}>
-              <Card glow={GLOW} className="h-full p-5">
-                <Zap size={20} className="mb-2 text-threat" />
-                <div className="mb-1.5 text-[19px] leading-tight font-semibold text-fg">{r.nombre}</div>
-                <p className="text-[14.5px] leading-snug text-dim">{r.descripcion}</p>
-              </Card>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-      <Reveal delay={0.7} className="mt-5 flex flex-wrap items-center gap-2.5">
-        <span className="mr-2 flex items-center gap-2 font-mono text-[13px] tracking-[0.2em] text-defense uppercase">
-          <ShieldCheck size={16} /> Aplicaciones defensivas
-        </span>
-        {c.aplicaciones_defensivas!.map((x) => (
-          <Chip key={x} color={DEF} className="text-[14px] normal-case tracking-normal">{x}</Chip>
-        ))}
-      </Reveal>
-      <Reveal delay={0.8} className="mt-4 grid grid-cols-2 gap-8 text-[14.5px] leading-snug text-faint">
-        <p>
-          <Cpu size={14} className="mr-1.5 inline -translate-y-px" />
-          {c.limitaciones}
-        </p>
-        <p>* {c.aclaracion}</p>
+            ),
+          },
+          ...c.riesgos!.map((r, k) => {
+            const Icon = riesgoIcons[k]
+            return {
+              id: r.nombre,
+              span: 'col-span-3',
+              color: THREAT,
+              delay: 0.2 + k * 0.08,
+              children: (
+                <>
+                  <div className="mb-2 flex items-start gap-2.5">
+                    <Icon size={20} className="mt-1 shrink-0 text-threat" />
+                    <div className="text-[20px] leading-tight font-semibold text-fg">{r.nombre}</div>
+                  </div>
+                  <p className="text-[17px] leading-snug text-dim">{r.descripcion}</p>
+                </>
+              ),
+            }
+          }),
+          {
+            id: 'defensa',
+            span: 'col-span-8',
+            color: DEF,
+            delay: 0.5,
+            children: (
+              <>
+                <div className="mb-3 flex items-center gap-2.5 font-mono text-[15px] tracking-[0.18em] text-defense uppercase">
+                  <ShieldCheck size={18} /> Aplicaciones defensivas
+                </div>
+                <div className="flex flex-wrap content-start gap-2.5">
+                  {c.aplicaciones_defensivas!.map((x) => (
+                    <Chip key={x} color={DEF} className="font-sans text-[16px] normal-case tracking-normal">{x}</Chip>
+                  ))}
+                </div>
+              </>
+            ),
+          },
+          {
+            id: 'limitaciones',
+            span: 'col-span-4',
+            color: 'var(--color-dim)',
+            delay: 0.6,
+            children: (
+              <>
+                <div className="mb-3 flex items-center gap-2.5 font-mono text-[15px] tracking-[0.18em] text-dim uppercase">
+                  <Cpu size={18} /> Limitaciones
+                </div>
+                <p className="text-[18px] leading-snug text-fg/90">{c.limitaciones}</p>
+              </>
+            ),
+          },
+        ]}
+      />
+      <Reveal delay={0.7} className="mt-4">
+        <p className="text-[16px] leading-snug text-dim">* {c.aclaracion}</p>
       </Reveal>
       <KeyMessage color={EMBER} delay={0.9} className="mt-4">{c.mensaje_clave}</KeyMessage>
     </Slide>
@@ -399,39 +344,52 @@ const lessonIcons = [KeyRound, Package, RefreshCw, ShieldMinus, LifeBuoy, Bot]
 export function Lessons() {
   const s = A[6]
   const c = s.contenido
+  const [activo, setActivo] = useState<number | null>(null)
   const [a, b] = c.mensaje_clave!.split(/(?<=\.)\s+/)
+  const lecciones = c.aprendizajes!.map((l, k) => ({ id: k + 1, label: l.titulo, descripcion: l.descripcion, icon: lessonIcons[k] ?? ShieldCheck }))
   return (
     <Slide n={20} part="bo" bg="aurora">
-      <Title kicker={s.subtitulo} title={s.titulo} size={84} className="mb-4" />
+      <Title kicker={s.subtitulo} title={s.titulo} size={72} className="mb-5" />
       <Reveal delay={0.1}>
-        <p className="mb-8 max-w-[1500px] text-[23px] text-dim">{c.introduccion}</p>
+        <p className="mb-6 max-w-[1500px] text-[23px] leading-snug text-dim">{c.introduccion}</p>
       </Reveal>
-      <div className="grid grid-cols-3 gap-5">
-        {c.aprendizajes!.map((l, k) => {
-          const Icon = lessonIcons[k] ?? ShieldCheck
-          return (
-            <Reveal key={l.titulo} delay={0.2 + k * 0.07}>
-              <Card glow="#2ee6d626" className="flex h-full gap-5 p-6">
-                <div className="grid size-12 shrink-0 place-items-center rounded-xl border border-defense/30 bg-defense/10 text-defense">
-                  <Icon size={24} />
+      <div className="grid min-h-0 flex-1 grid-cols-[560px_minmax(0,1fr)] gap-12">
+        <Reveal delay={0.2} className="h-full">
+          <RadialOrbitalTimeline
+            items={lecciones}
+            activeId={activo}
+            onActiveChange={setActivo}
+            center={<ShieldCheck size={40} className="text-ember" />}
+          />
+        </Reveal>
+        <div className="grid grid-cols-2 content-center gap-3">
+          {lecciones.map((l, k) => {
+            const Icon = l.icon
+            const on = activo === l.id
+            return (
+              <Reveal key={l.id} delay={0.25 + k * 0.07} className="h-full">
+                <div className="h-full" onMouseEnter={() => setActivo(l.id)} onMouseLeave={() => setActivo(null)}>
+                  <Card glow={`color-mix(in oklab, ${EMBER} 22%, transparent)`} className={`flex h-full gap-4 p-4 transition-colors duration-300 ${on ? 'border-ember/60 bg-ember/10' : ''}`}>
+                    <div className="grid size-12 shrink-0 place-items-center rounded-xl border border-ember/30 bg-ember/10 text-ember">
+                      <Icon size={22} />
+                    </div>
+                    <div>
+                      <div className="mb-1 text-[22px] leading-tight font-semibold text-fg">{l.label}</div>
+                      <p className="text-[22px] leading-snug text-dim">{l.descripcion}</p>
+                    </div>
+                  </Card>
                 </div>
-                <div>
-                  <div className="mb-1 text-[22px] font-semibold text-fg">{l.titulo}</div>
-                  <p className="text-[16.5px] leading-snug text-dim">{l.descripcion}</p>
-                </div>
-              </Card>
-            </Reveal>
-          )
-        })}
-      </div>
-      <Reveal delay={0.7} className="mt-6">
-        <div className="flex items-center gap-5 rounded-2xl border border-line bg-panel/60 px-7 py-4">
-          <Radar size={26} className="shrink-0 text-defense" />
-          <p className="text-[19px] leading-snug text-fg/90">{c.conexion_con_escaneo_de_puertos}</p>
+              </Reveal>
+            )
+          })}
         </div>
-      </Reveal>
-      <Reveal delay={0.9} className="mt-auto">
-        <p className="text-[62px] leading-[1] font-semibold tracking-[-0.04em] text-fg">
+      </div>
+      <Reveal delay={0.7}>
+        <div className="mb-5 flex items-center gap-5 rounded-2xl border border-line bg-panel/60 px-7 py-4">
+          <Radar size={26} className="shrink-0 text-defense" />
+          <p className="text-[22px] leading-snug text-fg/90">{c.conexion_con_escaneo_de_puertos}</p>
+        </div>
+        <p className="text-[50px] leading-[1.05] font-semibold tracking-[-0.04em] text-fg">
           {a} <span className="font-serif font-normal text-ember italic">{b}</span>
         </p>
       </Reveal>

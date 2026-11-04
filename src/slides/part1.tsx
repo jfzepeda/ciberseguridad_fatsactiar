@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import {
-  AlertTriangle, ArrowRight, Check, CircleDot, Database, Minus, Radar, Server, ShieldCheck, Skull, Waypoints, X,
+  AlertTriangle, ArrowRight, Check, CircleDot, Minus, Radar, Server, ShieldCheck, Skull, Waypoints, X,
 } from 'lucide-react'
 import { createRef, useMemo, useRef } from 'react'
 import { AnimatedBeam } from '@/components/ui/animated-beam'
@@ -8,6 +8,9 @@ import { BorderBeam } from '@/components/ui/border-beam'
 import { OrbitingCircles } from '@/components/ui/orbiting-circles'
 import { TextShimmer } from '@/components/ui/text-shimmer'
 import { Card, Chip, KeyMessage, Logo, Node, Reveal, S, Slide, Title, tools } from '@/kit'
+import { BentoImpact } from '@/components/ui/bento'
+import { PinnedSteps } from '@/components/ui/how-it-works'
+import { GradientCard } from '@/components/ui/gradient-card'
 
 const DEF = 'var(--color-defense)'
 const THREAT = 'var(--color-threat)'
@@ -178,43 +181,32 @@ export function Chain() {
   const c = s.contenido
   const ex = c.ejemplo!
   const exRows: [string, string][] = [
-    ['target', ex.escenario], ['discovery', ex.descubrimiento], ['weakness', ex.debilidad], ['potential result', ex.consecuencia_potencial],
+    ['Escenario', ex.escenario], ['Descubrimiento', ex.descubrimiento], ['Debilidad', ex.debilidad], ['Consecuencia potencial', ex.consecuencia_potencial],
   ]
+  const steps = c.cadena_de_ataque!.map((f, k, a) => {
+    const t = k / (a.length - 1)
+    return { title: f.nombre, color: `color-mix(in oklab, var(--color-threat) ${Math.round(15 + t * 85)}%, var(--color-dim))` }
+  })
   return (
     <Slide n={4} part="ps">
-      <Title kicker={s.subtitulo} title={s.titulo} />
+      <Title kicker={s.subtitulo} title={s.titulo} className="mb-6" />
       <Reveal delay={0.1}>
-        <p className="max-w-[1400px] text-[28px] leading-snug text-dim">{c.concepto}</p>
+        <p className="max-w-[1600px] text-[28px] leading-snug text-dim">{c.concepto}</p>
       </Reveal>
-      <div className="mt-12 flex items-stretch">
-        {c.cadena_de_ataque!.map((f, k, a) => {
-          const t = k / (a.length - 1)
-          const col = `color-mix(in oklab, var(--color-threat) ${Math.round(15 + t * 85)}%, var(--color-dim))`
-          return (
-            <Reveal key={f.paso} delay={0.2 + k * 0.1} className="flex flex-1 items-center">
-              <div
-                className="flex h-[200px] flex-1 flex-col justify-between rounded-2xl border p-6"
-                style={{ borderColor: `color-mix(in oklab, ${col} 50%, transparent)`, background: `color-mix(in oklab, ${col} ${Math.round(4 + t * 14)}%, transparent)`, boxShadow: k === a.length - 1 ? `0 0 60px -10px ${col}` : undefined }}
-              >
-                <span className="font-mono text-[16px]" style={{ color: col }}>0{k + 1}</span>
-                <span className="text-[26px] leading-tight font-medium text-fg">{f.nombre}</span>
-              </div>
-              {k < a.length - 1 && <ArrowRight className="mx-2 shrink-0" size={22} style={{ color: col }} />}
-            </Reveal>
-          )
-        })}
-      </div>
-      <div className="mt-10 grid grid-cols-[1fr_620px] gap-10">
+      <Reveal delay={0.2} className="mt-10">
+        <PinnedSteps steps={steps} />
+      </Reveal>
+      <div className="mt-10 grid grid-cols-[1fr_540px] gap-10">
         <Reveal delay={0.8}>
-          <Card glow="#ff3d7125" className="p-7">
-            <div className="mb-5 flex items-center gap-3">
-              <Chip color={THREAT}>hypothetical example</Chip>
+          <Card glow="color-mix(in oklab, var(--color-threat) 15%, transparent)" className="p-6">
+            <div className="mb-4 flex items-center gap-3">
+              <Chip color={THREAT}>Ejemplo hipotético</Chip>
             </div>
             <div className="grid grid-cols-4 gap-6">
               {exRows.map(([k, v]) => (
                 <div key={k}>
-                  <div className="mb-2 font-mono text-[13px] tracking-[0.18em] text-faint uppercase">{k}</div>
-                  <div className="text-[25px] leading-snug text-fg">{v}</div>
+                  <div className="mb-2 font-mono text-[15px] tracking-[0.1em] text-faint uppercase">{k}</div>
+                  <div className="text-[24px] leading-snug text-fg">{v}</div>
                 </div>
               ))}
             </div>
@@ -234,39 +226,16 @@ export function Chain() {
 /* 05 — Why does it matter */
 export function Impact() {
   const s = S[4]
-  const r = s.contenido.riesgos!
+  const c = s.contenido
   return (
     <Slide n={5} part="ps">
       <Title kicker={s.subtitulo} title={s.titulo} />
-      <div className="relative grid flex-1 grid-cols-2 gap-6">
-        {r.map((x, k) => (
-          <Reveal key={x.nombre} delay={0.2 + k * 0.1}>
-            <Card glow="#ff3d7125" className={`flex h-full flex-col justify-center ${k % 2 ? 'pl-[150px]' : 'pr-[150px]'}`}>
-              <span className="mb-3 font-mono text-[15px] tracking-[0.2em] text-threat uppercase">risk 0{k + 1}</span>
-              <h3 className="mb-2 text-[40px] font-semibold tracking-tight text-fg">{x.nombre}</h3>
-              <p className="text-[24px] text-dim">{x.descripcion}</p>
-            </Card>
-          </Reveal>
-        ))}
-        <div className="pointer-events-none absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2">
-          <Reveal delay={0.1}>
-            <div className="relative grid size-[200px] place-items-center rounded-full border border-threat/50 bg-ink shadow-[0_0_80px_-10px_var(--color-threat)]">
-              <span className="absolute inset-0 animate-pulse-ring rounded-full border border-threat/60" />
-              <Database size={72} strokeWidth={1.3} className="text-threat" />
-            </div>
-          </Reveal>
-        </div>
-      </div>
-      <Reveal delay={0.7} className="mt-8">
-        <div className="flex items-center gap-6 rounded-2xl border border-assess/30 bg-assess/5 px-8 py-5">
-          <Chip color="var(--color-assess)">data science</Chip>
-          <ul className="space-y-1">
-            {(s.contenido.relacion_con_ciencia_de_datos as string[]).map((x) => (
-              <li key={x} className="text-[22px] leading-snug text-fg">{x}</li>
-            ))}
-          </ul>
-        </div>
-      </Reveal>
+      <BentoImpact
+        riesgos={c.riesgos!}
+        principios={c.principios_afectados as string[]}
+        ciencia={c.relacion_con_ciencia_de_datos as string[]}
+      />
+      <KeyMessage>{c.mensaje_clave}</KeyMessage>
     </Slide>
   )
 }
@@ -326,38 +295,37 @@ function ProductSlide({ n, idx, diagram }: { n: number; idx: number; diagram: Re
 
       <div className="grid flex-1 grid-cols-[1fr_600px_1fr] gap-8">
         <Reveal delay={0.2}>
-          <Card glow={tool.glow} className="h-full">
-            <h3 className="mb-6 font-mono text-[15px] tracking-[0.22em] text-dim uppercase">How it works</h3>
-            <ol className="space-y-6">
+          <GradientCard accent={tool.color} badge="Cómo funciona" className="h-full">
+            <p className="mb-6 text-[24px] leading-snug font-medium text-fg">{c.funcion_principal}</p>
+            <ol className="space-y-4">
               {c.funcionamiento!.map((x, k) => (
-                <li key={x.paso} className="flex gap-4 text-[25px] leading-snug text-fg">
+                <li key={x.paso} className="flex gap-4 text-[22px] leading-snug text-fg">
                   <span className="mt-0.5 font-mono text-[16px]" style={{ color: tool.color }}>0{k + 1}</span>
                   {x.descripcion}
                 </li>
               ))}
             </ol>
-          </Card>
+          </GradientCard>
         </Reveal>
         <Reveal delay={0.3}>
           <div className="relative h-full overflow-hidden rounded-3xl border border-line bg-ink/80">{diagram}</div>
         </Reveal>
-        <Reveal delay={0.4} className="flex flex-col gap-6">
-          <Card glow={tool.glow} className="flex-1 p-7">
-            <h3 className="mb-4 font-mono text-[15px] tracking-[0.22em] text-dim uppercase">Capabilities</h3>
+        <Reveal delay={0.4} className="flex flex-col gap-5">
+          <GradientCard accent={tool.color} badge="Capacidades" className="flex-1 p-6">
             <ul className="space-y-2.5">
               {c.capacidades!.map((x) => (
-                <li key={x} className="flex items-start gap-3 text-[21px] leading-snug text-fg">
-                  <Check size={20} className="mt-1 shrink-0" style={{ color: tool.color }} /> {x}
+                <li key={x} className="flex items-start gap-3 text-[22px] leading-snug text-fg">
+                  <Check size={20} className="mt-1.5 shrink-0" style={{ color: tool.color }} /> {x}
                 </li>
               ))}
             </ul>
-          </Card>
-          <Card glow="#ff3d7120" className="p-7">
-            <h3 className="mb-4 font-mono text-[15px] tracking-[0.22em] text-threat/80 uppercase">Limitations</h3>
-            <ul className="space-y-2.5">
+          </GradientCard>
+          <Card glow="color-mix(in oklab, var(--color-threat) 14%, transparent)" className="p-6">
+            <h3 className="mb-4 font-mono text-[15px] tracking-[0.22em] text-threat/80 uppercase">Limitaciones</h3>
+            <ul className="space-y-2">
               {(c.limitaciones as string[]).map((x) => (
-                <li key={x} className="flex items-start gap-3 text-[19px] leading-snug text-dim">
-                  <Minus size={20} className="mt-0.5 shrink-0 text-threat/80" /> {x}
+                <li key={x} className="flex items-start gap-3 text-[22px] leading-snug text-dim">
+                  <Minus size={20} className="mt-1.5 shrink-0 text-threat/80" /> {x}
                 </li>
               ))}
             </ul>
@@ -491,36 +459,44 @@ export function Compare() {
   const s = S[9]
   const c = s.contenido
   const rows = c.comparacion as { capacidad: string; cisco: string; rapid7: string; tenable: string }[]
-  const names = S[5].contenido.herramientas!
+  const dif = c.diferencias_clave as { producto: string; especialidad: string }[]
   const keys = ['cisco', 'rapid7', 'tenable'] as const
-  const msg = c.mensaje_clave!.split(/(?<=\.)\s+/)
+  const toolWords = ['Cisco', 'Rapid7', 'Nessus']
+  const msg = c.mensaje_clave!.split(/(Cisco|Rapid7|Nessus)/)
   return (
     <Slide n={10} part="ps">
-      <Title kicker={s.subtitulo} title={s.titulo} size={104} className="mb-8" />
+      <Title kicker={s.subtitulo} title={s.titulo} className="mb-4" />
+      <Reveal delay={0.15} className="mb-6">
+        <p className="text-[24px] leading-snug text-dim">{c.introduccion}</p>
+      </Reveal>
       <Reveal delay={0.2}>
         <div className="overflow-hidden rounded-3xl border border-line bg-panel/70 backdrop-blur">
           <div className="grid grid-cols-[440px_1fr_1fr_1fr] border-b border-line">
-            <div className="px-8 py-6 font-mono text-[14px] tracking-[0.2em] text-dim uppercase">Capacidad</div>
+            <div className="px-8 py-4 font-mono text-[15px] tracking-[0.2em] text-dim uppercase">Capacidad</div>
             {tools.map((t, k) => (
-              <div key={t.brand} className="flex flex-col gap-3 border-l border-line px-8 py-6">
+              <div key={t.brand} className="flex flex-col gap-2 border-l border-line px-6 py-4">
                 <Logo brand={t.brand} size={38} />
-                <span className="text-[17px] text-dim">{names[k].producto}</span>
+                <span className="text-[22px] leading-snug font-medium text-fg">{dif[k].producto}</span>
+                <span className="text-[18px] leading-snug" style={{ color: t.color }}>{dif[k].especialidad}</span>
               </div>
             ))}
           </div>
           {rows.map((r, ri) => (
             <motion.div
               key={r.capacidad}
-              className="grid grid-cols-[440px_1fr_1fr_1fr] border-b border-line/60 last:border-0"
+              className="group grid grid-cols-[440px_1fr_1fr_1fr] border-b border-line/60 last:border-0"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4 + ri * 0.08 }}
             >
-              <div className="px-8 py-[22px] text-[23px] font-medium text-fg">{r.capacidad}</div>
+              <div className="relative py-2.5 pl-10 pr-6 text-[23px] leading-snug font-medium text-fg">
+                <span className="absolute inset-y-3 left-0 w-1 rounded-r-full bg-line transition-colors duration-200 group-hover:bg-defense" />
+                <span className="inline-block transition duration-200 group-hover:translate-x-2">{r.capacidad}</span>
+              </div>
               {keys.map((k) => {
                 const { Icon, c: col } = verdict(r[k])
                 return (
-                  <div key={k} className="flex items-center gap-3 border-l border-line/60 px-8 py-[22px] text-[21px] text-dim">
+                  <div key={k} className="flex items-center gap-3 border-l border-line/60 px-6 py-2.5 text-[22px] leading-snug text-dim">
                     <Icon size={22} className="shrink-0" style={{ color: col }} />
                     {r[k]}
                   </div>
@@ -532,9 +508,10 @@ export function Compare() {
       </Reveal>
       <Reveal delay={1} className="mt-auto">
         <p className="text-[28px] leading-snug font-medium">
-          {msg.map((m, k) => (
-            <span key={m} style={{ color: tools[k]?.color }}>{m} </span>
-          ))}
+          {msg.map((m, k) => {
+            const i = toolWords.indexOf(m)
+            return <span key={k} style={i < 0 ? undefined : { color: tools[i]?.color }}>{m}</span>
+          })}
         </p>
       </Reveal>
     </Slide>

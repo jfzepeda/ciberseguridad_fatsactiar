@@ -1,0 +1,32 @@
+numero: 11
+tipo: caso_practico
+titulo: UN ATAQUE, TRES DEFENSAS
+subtitulo: Aplicación de las herramientas en un escenario realista
+contenido:
+  escenario: Una empresa tiene un servidor accesible desde internet con HTTPS en el puerto 443 y un servicio de
+    administración desactualizado en el puerto 8443.
+  secuencia_del_ataque:
+  - paso: 1
+    accion: Un atacante escanea los puertos del servidor.
+  - paso: 2
+    accion: Identifica el servicio de administración expuesto.
+  - paso: 3
+    accion: Investiga si la versión instalada presenta vulnerabilidades conocidas.
+  - paso: 4
+    accion: Intenta aprovechar una vulnerabilidad para obtener acceso.
+  respuesta_de_las_herramientas:
+  - herramienta: Cisco Secure Firewall
+    momento: Durante el reconocimiento
+    accion: Puede detectar patrones sospechosos de escaneo y bloquear el origen si las políticas de prevención están
+      configuradas.
+  - herramienta: Rapid7 InsightVM
+    momento: Durante la evaluación y gestión del riesgo
+    accion: Identifica el servicio vulnerable, evalúa su riesgo y ayuda a priorizar su actualización.
+  - herramienta: Tenable Nessus
+    momento: Durante la evaluación de seguridad
+    accion: Escanea el servicio, identifica vulnerabilidades conocidas y recomienda medidas de corrección.
+  resultado_esperado: La empresa detecta el comportamiento sospechoso, identifica la vulnerabilidad y corrige el
+    servicio antes de que pueda ser explotado.
+  aclaracion: El escenario es hipotético. La detección depende de la configuración, la visibilidad de red y la disponibilidad
+    de comprobaciones compatibles.
+  mensaje_clave: Las herramientas se complementan porque intervienen en distintas etapas del riesgo.

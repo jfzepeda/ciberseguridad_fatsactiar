@@ -1,0 +1,21 @@
+numero: 6
+tipo: introduccion_soluciones
+titulo: TRES HERRAMIENTAS, TRES ENFOQUES
+subtitulo: Prevención, gestión y evaluación de vulnerabilidades
+contenido:
+  introduccion: Cisco Secure Firewall, Rapid7 InsightVM y Tenable Nessus abordan diferentes partes del problema
+    de seguridad.
+  herramientas:
+  - empresa: Cisco
+    producto: Cisco Secure Firewall
+    categoria: Firewall de nueva generación
+    objetivo: Detectar y bloquear tráfico sospechoso.
+  - empresa: Rapid7
+    producto: InsightVM
+    categoria: Gestión de vulnerabilidades
+    objetivo: Descubrir activos, identificar vulnerabilidades y priorizar su corrección.
+  - empresa: Tenable
+    producto: Nessus
+    categoria: Escáner de vulnerabilidades
+    objetivo: Evaluar servicios expuestos e identificar debilidades técnicas.
+  mensaje_clave: Las tres soluciones son complementarias, pero no cumplen exactamente la misma función.

@@ -1,0 +1,31 @@
+numero: 12
+tipo: estrategia
+titulo: DEFENSA EN PROFUNDIDAD
+subtitulo: La estrategia más efectiva utiliza múltiples capas
+contenido:
+  concepto: La defensa en profundidad consiste en implementar múltiples controles de seguridad para evitar que el
+    fallo de uno solo comprometa toda la infraestructura.
+  capas:
+  - numero: 1
+    nombre: Reducir la exposición
+    accion: Cerrar puertos innecesarios, restringir conexiones y limitar los servicios públicos.
+  - numero: 2
+    nombre: Detectar y prevenir
+    accion: Utilizar Cisco Secure Firewall para monitorear y bloquear tráfico sospechoso.
+  - numero: 3
+    nombre: Descubrir y priorizar
+    accion: Utilizar Rapid7 InsightVM para identificar activos vulnerables y organizar su corrección.
+  - numero: 4
+    nombre: Evaluar y validar
+    accion: Utilizar Tenable Nessus para examinar servicios expuestos y verificar correcciones.
+  - numero: 5
+    nombre: Mantener la seguridad
+    accion: Actualizar sistemas, aplicar autenticación robusta y realizar evaluaciones periódicas.
+  medidas_complementarias:
+  - Segmentación de redes
+  - Autenticación multifactor
+  - Principio de privilegio mínimo
+  - Monitoreo de registros
+  - Gestión de parches
+  - Respuesta a incidentes
+  mensaje_clave: Ninguna herramienta elimina por sí sola el riesgo de escaneo y explotación.

@@ -1,0 +1,15 @@
+numero: 13
+tipo: conclusiones_seccion
+titulo: LO QUE DEBEMOS RECORDAR
+subtitulo: Los atacantes escanean. Los defensores deben conocer primero sus vulnerabilidades.
+contenido:
+  conclusiones:
+  - El escaneo de puertos es una técnica de reconocimiento, no necesariamente un ataque exitoso.
+  - Un puerto abierto no significa automáticamente que exista una vulnerabilidad.
+  - Cisco Secure Firewall puede detectar y prevenir determinados escaneos maliciosos.
+  - Rapid7 InsightVM ayuda a priorizar vulnerabilidades y gestionar su corrección.
+  - Tenable Nessus identifica servicios expuestos y debilidades conocidas.
+  - La combinación de visibilidad, prevención y remediación reduce el riesgo.
+  relacion_con_ciencia_de_datos: La protección de bases de datos, modelos, notebooks y pipelines requiere conocer
+    los servicios expuestos y mantener controles de seguridad continuos.
+  mensaje_clave: No puedes proteger aquello que desconoces que está expuesto.

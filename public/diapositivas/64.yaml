@@ -1,0 +1,31 @@
+numero: 2
+tipo: introduccion
+titulo: CADA SERVIDOR TIENE PUERTAS
+subtitulo: Comprendiendo los puertos de red
+contenido:
+  concepto: Los puertos de red identifican puntos de comunicación utilizados por aplicaciones y servicios. Permiten
+    que un mismo dispositivo ofrezca diferentes servicios a través de una conexión de red.
+  ejemplos:
+  - puerto: 22
+    servicio: SSH
+    funcion: Administración remota segura
+  - puerto: 80
+    servicio: HTTP
+    funcion: Tráfico web sin cifrado
+  - puerto: 443
+    servicio: HTTPS
+    funcion: Tráfico web cifrado
+  - puerto: 5432
+    servicio: PostgreSQL
+    funcion: Conexiones a bases de datos
+  - puerto: 3389
+    servicio: RDP
+    funcion: Acceso a escritorio remoto
+  estados:
+  - estado: Abierto
+    descripcion: Un servicio acepta conexiones en el puerto.
+  - estado: Cerrado
+    descripcion: El dispositivo responde, pero no existe un servicio escuchando en ese puerto.
+  - estado: Filtrado
+    descripcion: Un firewall u otro mecanismo impide determinar directamente si el puerto está abierto.
+  mensaje_clave: Un puerto abierto no es automáticamente vulnerable, pero puede aumentar la superficie de ataque.
