@@ -18,11 +18,11 @@ Una pregunta, normalmente de opción múltiple, que incluye un código hexadecim
 1. **Extrae** el código hexadecimal entre paréntesis y conviértelo a **mayúsculas** (sin modificar su valor). No lo interpretes como número decimal.
 2. **Consulta directamente un solo archivo** en esta URL RAW, sustituyendo `<CODIGO>`:
 
-   `https://fatsactiar.rmkztx964s.workers.dev/diapositivas/<CODIGO>.yaml`
+   `https://raw.githubusercontent.com/jfzepeda/ciberseguridad_fatsactiar/main/public/diapositivas/<CODIGO>.yaml`
 
    Ejemplo para `271A`:
 
-   `https://fatsactiar.rmkztx964s.workers.dev/diapositivas/271A.yaml`
+   `https://raw.githubusercontent.com/jfzepeda/ciberseguridad_fatsactiar/main/public/diapositivas/271A.yaml`
 
 3. **Lee únicamente ese YAML** y localiza la información que resuelve la pregunta.
 4. Si hay opciones de respuesta, **elige la opción respaldada por ese YAML** y devuelve su texto exacto, preferentemente con la letra de la opción si se proporcionó.
