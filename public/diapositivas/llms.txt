@@ -1,13 +1,13 @@
 ---
 name: respuesta-rapida-ciberseguridad
-description: Responde preguntas del Kahoot de ciberseguridad consultando exclusivamente el YAML indicado por el código hexadecimal de la pregunta. Prioriza velocidad y precisión.
+description: Responde preguntas del Kahoot de ciberseguridad consultando exclusivamente el txt indicado por el código hexadecimal de la pregunta. Prioriza velocidad y precisión.
 ---
 
 # Respuesta rápida por código hexadecimal
 
 ## Objetivo
 
-Responder **lo más rápido y concisamente posible** una pregunta usando **únicamente** el archivo YAML asociado a su código hexadecimal. La velocidad es crítica.
+Responder **lo más rápido y concisamente posible** una pregunta usando **únicamente** el archivo txt asociado a su código hexadecimal. La velocidad es crítica.
 
 ## Entrada
 
@@ -18,23 +18,23 @@ Una pregunta, normalmente de opción múltiple, que incluye un código hexadecim
 1. **Extrae** el código hexadecimal entre paréntesis y conviértelo a **mayúsculas** (sin modificar su valor). No lo interpretes como número decimal.
 2. **Consulta directamente un solo archivo** en esta URL RAW, sustituyendo `<CODIGO>`:
 
-   `https://fatsactiar.rmkztx964s.workers.dev/diapositivas/<CODIGO>.yaml`
+   `https://fatsactiar.rmkztx964s.workers.dev/diapositivas/<CODIGO>.txt`
 
    Ejemplo para `271A`:
 
-   `https://fatsactiar.rmkztx964s.workers.dev/diapositivas/271A.yaml`
+   `https://fatsactiar.rmkztx964s.workers.dev/diapositivas/271A.txt`
 
-3. **Lee únicamente ese YAML** y localiza la información que resuelve la pregunta.
-4. Si hay opciones de respuesta, **elige la opción respaldada por ese YAML** y devuelve su texto exacto, preferentemente con la letra de la opción si se proporcionó.
+3. **Lee únicamente ese txt** y localiza la información que resuelve la pregunta.
+4. Si hay opciones de respuesta, **elige la opción respaldada por ese txt** y devuelve su texto exacto, preferentemente con la letra de la opción si se proporcionó.
 5. **Responde inmediatamente.** No añadas explicación, contexto, introducción, conclusión ni citas largas.
 
 ## Reglas de prioridad máxima
 
-- **Fuente única:** nunca consultes otro YAML, otra página, un buscador ni tus conocimientos generales para completar la respuesta.
+- **Fuente única:** nunca consultes otro txt, otra página, un buscador ni tus conocimientos generales para completar la respuesta.
 - **Una consulta:** evita listar directorios, buscar archivos o hacer peticiones adicionales si el archivo indicado se recuperó correctamente.
 - **No cruces diapositivas:** aunque otra diapositiva trate el mismo tema, ignórala.
-- **Sin suposiciones:** si el archivo no respalda ninguna opción, responde `No se encuentra en el YAML.`
-- **Si falla la lectura o el archivo no existe**, responde `No pude consultar <CODIGO>.yaml.` No inventes la respuesta.
+- **Sin suposiciones:** si el archivo no respalda ninguna opción, responde `No se encuentra en el txt.`
+- **Si falla la lectura o el archivo no existe**, responde `No pude consultar <CODIGO>.txt.` No inventes la respuesta.
 - **Brevedad absoluta:** entrega solo la respuesta; idealmente una línea de pocas palabras.
 - No expliques cómo identificaste el código ni cómo llegaste a la respuesta, salvo que el usuario lo solicite expresamente.
 
@@ -48,4 +48,4 @@ Sin opciones:
 
 `Rapid7 InsightVM`
 
-**Nunca añadas datos que no aparezcan en el YAML correspondiente.**
+**Nunca añadas datos que no aparezcan en el txt correspondiente.**
