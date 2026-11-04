@@ -1,0 +1,939 @@
+[
+  {
+    "presentacion": {
+      "titulo": "PORT SCANNING & EXPLOITATION",
+      "subtitulo": "How Attackers Find Vulnerabilities — And How We Stop Them",
+      "idioma": "en",
+      "formato": "16:9",
+      "estilo_visual": {
+        "inspiracion": "NVIDIA Product Keynotes",
+        "fondo": "#090B0F",
+        "colores": {
+          "principal": "#FFFFFF",
+          "seguridad": "#76B900",
+          "amenaza": "#FF5630",
+          "secundario": "#8E949D"
+        },
+        "tipografia": "Sans serif moderna y de alto contraste",
+        "principios": [
+          "Una idea central por diapositiva",
+          "Títulos cortos y contundentes",
+          "Diagramas técnicos en lugar de párrafos",
+          "Visualizaciones de redes y protocolos",
+          "Uso de verde para defensa y rojo para amenazas",
+          "Comparaciones visuales entre productos",
+          "Imágenes limpias, realistas y tecnológicas"
+        ]
+      },
+      "diapositivas": [
+        {
+          "numero": 1,
+          "tipo": "portada",
+          "titulo": "PORT SCANNING",
+          "subtitulo": "From Reconnaissance to Exploitation",
+          "contenido": {
+            "frase": "Every open port is a potential entry point.",
+            "tema": "Understanding port scanning attacks and comparing Cisco Secure Firewall, Rapid7 InsightVM, and Tenable Nessus."
+          },
+          "imagen": "Cinematic dark data center with interconnected servers, network cables and red scanning beams targeting individual machines. Minimalist, realistic, strong contrast.",
+          "diseno": "Huge white PORT SCANNING title, smaller green subtitle, full-width dark background."
+        },
+        {
+          "numero": 2,
+          "tipo": "introduccion",
+          "titulo": "Every Server Has Doors",
+          "subtitulo": "Understanding Network Ports",
+          "contenido": {
+            "mensaje_principal": "Network ports identify communication endpoints where applications and services receive traffic.",
+            "ejemplos": [
+              {
+                "puerto": 22,
+                "servicio": "SSH",
+                "funcion": "Remote administration"
+              },
+              {
+                "puerto": 80,
+                "servicio": "HTTP",
+                "funcion": "Web traffic"
+              },
+              {
+                "puerto": 443,
+                "servicio": "HTTPS",
+                "funcion": "Encrypted web traffic"
+              },
+              {
+                "puerto": 5432,
+                "servicio": "PostgreSQL",
+                "funcion": "Database connections"
+              },
+              {
+                "puerto": 3389,
+                "servicio": "RDP",
+                "funcion": "Remote desktop access"
+              }
+            ],
+            "mensaje_clave": "An open port is not automatically vulnerable, but it creates a reachable attack surface."
+          },
+          "imagen": "Isometric server with five illuminated network connection points, each labeled with its port number and service.",
+          "diseno": "Large central server illustration, with port labels arranged around it."
+        },
+        {
+          "numero": 3,
+          "tipo": "explicacion_ataque",
+          "titulo": "How Port Scanning Works",
+          "subtitulo": "Finding the Open Doors",
+          "contenido": {
+            "mensaje_principal": "An attacker sends network probes to discover which ports respond and what services may be running.",
+            "etapas": [
+              {
+                "paso": 1,
+                "nombre": "Target Discovery",
+                "descripcion": "Identify reachable hosts or IP addresses."
+              },
+              {
+                "paso": 2,
+                "nombre": "Port Probing",
+                "descripcion": "Send TCP or UDP probes to selected ports."
+              },
+              {
+                "paso": 3,
+                "nombre": "Response Analysis",
+                "descripcion": "Classify ports as open, closed, or filtered."
+              },
+              {
+                "paso": 4,
+                "nombre": "Service Identification",
+                "descripcion": "Determine which applications may be exposed."
+              }
+            ],
+            "mensaje_clave": "The attacker is mapping the network before attempting exploitation."
+          },
+          "imagen": "Network diagram showing an attacker computer sending red probes to multiple ports on a server. One port responds in green, others are closed or filtered.",
+          "diseno": "Four-step horizontal process with animated-style directional arrows."
+        },
+        {
+          "numero": 4,
+          "tipo": "explicacion_ataque",
+          "titulo": "From Scanning to Exploitation",
+          "subtitulo": "Reconnaissance Is Only the Beginning",
+          "contenido": {
+            "mensaje_principal": "Port scanning reveals potential targets. Exploitation attempts to take advantage of a vulnerability in an exposed service.",
+            "flujo": [
+              "Discover an open port",
+              "Identify the running service",
+              "Determine its version or configuration",
+              "Find a relevant vulnerability",
+              "Attempt exploitation",
+              "Potential unauthorized access"
+            ],
+            "ejemplo_hipotetico": {
+              "objetivo": "A company server",
+              "descubrimiento": "SSH exposed on port 22",
+              "debilidad": "Weak credentials or vulnerable service",
+              "resultado_potencial": "Unauthorized remote access"
+            },
+            "aclaracion": "Open SSH does not inherently mean the server can be compromised.",
+            "mensaje_clave": "Scanning discovers opportunities. Vulnerabilities make exploitation possible."
+          },
+          "imagen": "Technical attack-chain diagram with six connected stages. Red path progresses from reconnaissance toward potential compromise.",
+          "diseno": "Horizontal attack chain with each step becoming visually more critical."
+        },
+        {
+          "numero": 5,
+          "tipo": "impacto",
+          "titulo": "Why Does It Matter?",
+          "subtitulo": "One Exposed Service Can Change Everything",
+          "contenido": {
+            "riesgos": [
+              {
+                "titulo": "Unauthorized Access",
+                "descripcion": "Attackers may compromise poorly protected services."
+              },
+              {
+                "titulo": "Data Exfiltration",
+                "descripcion": "Compromised services may expose confidential information."
+              },
+              {
+                "titulo": "Service Disruption",
+                "descripcion": "Exploitation can interrupt critical systems."
+              },
+              {
+                "titulo": "Lateral Movement",
+                "descripcion": "Attackers may use one compromised host to reach others."
+              }
+            ],
+            "relevancia_data_science": "Exposed databases, notebooks, model endpoints and data infrastructure can threaten confidentiality, integrity and availability."
+          },
+          "imagen": "Central compromised database server with four branching consequences represented by simple technical icons.",
+          "diseno": "Four-quadrant layout with one risk per quadrant."
+        },
+        {
+          "numero": 6,
+          "tipo": "transicion",
+          "titulo": "THREE TOOLS",
+          "subtitulo": "Three Different Approaches to Security",
+          "contenido": {
+            "herramientas": [
+              {
+                "empresa": "Cisco",
+                "producto": "Secure Firewall",
+                "enfoque": "Detect & Block"
+              },
+              {
+                "empresa": "Rapid7",
+                "producto": "InsightVM",
+                "enfoque": "Discover & Prioritize"
+              },
+              {
+                "empresa": "Tenable",
+                "producto": "Nessus",
+                "enfoque": "Scan & Assess"
+              }
+            ],
+            "mensaje_clave": "These tools address different stages of the same security problem."
+          },
+          "imagen": "Three large product logos, evenly distributed on a dark background, each accompanied by a distinct technical icon.",
+          "diseno": "Minimalist three-column layout, with the security function highlighted under each product."
+        },
+        {
+          "numero": 7,
+          "tipo": "solucion",
+          "titulo": "CISCO SECURE FIREWALL",
+          "subtitulo": "Detect the Scan. Block the Source.",
+          "contenido": {
+            "empresa": "Cisco",
+            "producto": "Cisco Secure Firewall",
+            "categoria": "Next-Generation Firewall",
+            "como_funciona": [
+              "Inspects network traffic crossing the firewall",
+              "Identifies suspicious port scanning patterns",
+              "Generates security events and alerts",
+              "Can block scanning sources when prevention mode is enabled"
+            ],
+            "caracteristicas_tecnicas": [
+              "TCP and UDP scan detection",
+              "Distributed port scan detection",
+              "Integration with access control policies",
+              "Detection and Prevention modes"
+            ],
+            "limitaciones": [
+              "Detection depends on traffic visibility and configuration",
+              "Port scan prevention is not automatically enabled",
+              "False positives can block legitimate scanners"
+            ],
+            "mensaje_clave": "Cisco focuses on detecting and stopping reconnaissance traffic as it happens."
+          },
+          "imagen": "Cisco firewall positioned between an attacker and internal servers. Red traffic is intercepted by a green defensive barrier.",
+          "diseno": "Large central network diagram showing attacker → firewall → protected infrastructure."
+        },
+        {
+          "numero": 8,
+          "tipo": "solucion",
+          "titulo": "RAPID7 INSIGHTVM",
+          "subtitulo": "Find the Weakness Before the Attacker Does",
+          "contenido": {
+            "empresa": "Rapid7",
+            "producto": "InsightVM",
+            "categoria": "Vulnerability Management",
+            "como_funciona": [
+              "Scans network assets and discovers reachable ports",
+              "Identifies services and known vulnerabilities",
+              "Correlates findings with vulnerability intelligence",
+              "Prioritizes remediation according to risk",
+              "Supports rescanning to verify fixes"
+            ],
+            "caracteristicas_tecnicas": [
+              "TCP and UDP service discovery",
+              "Credentialed scanning",
+              "Distributed Scan Engines",
+              "Risk prioritization and remediation workflows"
+            ],
+            "limitaciones": [
+              "Does not directly block hostile port scanning",
+              "Scan results depend on visibility and credentials",
+              "Findings must be remediated by administrators"
+            ],
+            "mensaje_clave": "Rapid7 helps security teams identify and prioritize the vulnerabilities attackers could exploit."
+          },
+          "imagen": "Enterprise vulnerability management dashboard concept with a network asset map, exposed services, and prioritized remediation findings.",
+          "diseno": "Large vulnerability dashboard visualization with three highlighted assets and their remediation priorities."
+        },
+        {
+          "numero": 9,
+          "tipo": "solucion",
+          "titulo": "TENABLE NESSUS",
+          "subtitulo": "Know Exactly What's Exposed",
+          "contenido": {
+            "empresa": "Tenable",
+            "producto": "Nessus",
+            "categoria": "Vulnerability Assessment Scanner",
+            "como_funciona": [
+              "Discovers open ports on authorized target systems",
+              "Identifies services and software configurations",
+              "Uses vulnerability detection plugins",
+              "Reports severity, affected assets and recommended fixes"
+            ],
+            "caracteristicas_tecnicas": [
+              "Configurable TCP and UDP port scanning",
+              "Service detection and fingerprinting",
+              "Credentialed and unauthenticated assessments",
+              "Plugin-based vulnerability detection"
+            ],
+            "dato_tecnico": "The default port selection covers thousands of common ports; configurations can expand to the full port range.",
+            "limitaciones": [
+              "Does not automatically block incoming attacks",
+              "Results may be incomplete without credentials",
+              "Aggressive scanning can affect sensitive systems"
+            ],
+            "mensaje_clave": "Nessus reveals exposed services and the vulnerabilities associated with them."
+          },
+          "imagen": "Technical network scanner interface showing a server and open ports, with each discovered service connected to vulnerability findings.",
+          "diseno": "Central server diagram with port numbers on the left and vulnerability results on the right."
+        },
+        {
+          "numero": 10,
+          "tipo": "comparacion",
+          "titulo": "DETECT. ASSESS. PREVENT.",
+          "subtitulo": "How Do the Three Tools Compare?",
+          "contenido": {
+            "columnas": [
+              "Capability",
+              "Cisco Secure Firewall",
+              "Rapid7 InsightVM",
+              "Tenable Nessus"
+            ],
+            "filas": [
+              {
+                "capacidad": "Detect suspicious port scans",
+                "cisco": "Yes, using traffic analysis",
+                "rapid7": "Not its primary function",
+                "tenable": "Not its primary function"
+              },
+              {
+                "capacidad": "Block scanning traffic",
+                "cisco": "Yes, when prevention is configured",
+                "rapid7": "No",
+                "tenable": "No"
+              },
+              {
+                "capacidad": "Discover exposed ports",
+                "cisco": "Observes network traffic",
+                "rapid7": "Yes, active discovery",
+                "tenable": "Yes, active discovery"
+              },
+              {
+                "capacidad": "Identify known vulnerabilities",
+                "cisco": "Through relevant security inspection",
+                "rapid7": "Yes, core capability",
+                "tenable": "Yes, core capability"
+              },
+              {
+                "capacidad": "Prioritize remediation",
+                "cisco": "Not its primary purpose",
+                "rapid7": "Yes, dedicated workflows",
+                "tenable": "Provides severity and fix guidance"
+              },
+              {
+                "capacidad": "Primary security role",
+                "cisco": "Network protection",
+                "rapid7": "Vulnerability management",
+                "tenable": "Vulnerability assessment"
+              }
+            ],
+            "mensaje_clave": "Cisco actively protects traffic. Rapid7 manages vulnerability risk. Nessus identifies and assesses technical weaknesses."
+          },
+          "imagen": "No decorative image. Use official product logos above the comparison columns.",
+          "diseno": "Full-width comparison matrix with simple icons and short phrases instead of dense paragraphs."
+        },
+        {
+          "numero": 11,
+          "tipo": "caso_practico",
+          "titulo": "ONE ATTACK. THREE DEFENSES.",
+          "subtitulo": "A Practical Security Scenario",
+          "contenido": {
+            "escenario": "A company exposes a server running HTTPS on port 443 and an outdated administration service on port 8443.",
+            "ataque": "An attacker scans both ports, identifies the outdated service and searches for a known vulnerability.",
+            "respuestas": [
+              {
+                "herramienta": "Cisco Secure Firewall",
+                "accion": "Detects suspicious scanning behavior and can block the scanning source.",
+                "momento": "During reconnaissance"
+              },
+              {
+                "herramienta": "Rapid7 InsightVM",
+                "accion": "Finds the exposed service, identifies its vulnerability and prioritizes remediation.",
+                "momento": "Before or after discovery"
+              },
+              {
+                "herramienta": "Tenable Nessus",
+                "accion": "Scans the service, detects the known vulnerability and recommends a fix.",
+                "momento": "During a vulnerability assessment"
+              }
+            ],
+            "aclaracion": "Hypothetical example. Specific detection requires correct configuration, supported vulnerability checks and network visibility.",
+            "mensaje_clave": "The tools complement each other rather than solving the same problem."
+          },
+          "imagen": "Single network architecture diagram with an external attacker, Cisco firewall, exposed server, and Rapid7 and Nessus assessment paths.",
+          "diseno": "One visual scenario with color-coded arrows: red for attacks, green for prevention, white for assessment."
+        },
+        {
+          "numero": 12,
+          "tipo": "recomendacion",
+          "titulo": "DEFENSE IN DEPTH",
+          "subtitulo": "The Strongest Strategy Uses Multiple Layers",
+          "contenido": {
+            "estrategia": [
+              {
+                "capa": "1. Reduce Exposure",
+                "accion": "Close unnecessary ports and restrict network access."
+              },
+              {
+                "capa": "2. Detect & Prevent",
+                "accion": "Use Cisco Secure Firewall to monitor and block suspicious traffic."
+              },
+              {
+                "capa": "3. Discover & Prioritize",
+                "accion": "Use Rapid7 InsightVM to identify and prioritize vulnerable assets."
+              },
+              {
+                "capa": "4. Validate Vulnerabilities",
+                "accion": "Use Nessus to assess exposed services and verify remediation."
+              },
+              {
+                "capa": "5. Maintain Security",
+                "accion": "Patch services, enforce authentication and repeat authorized assessments."
+              }
+            ],
+            "mensaje_clave": "No single tool eliminates the risk of port scanning and exploitation."
+          },
+          "imagen": "Five concentric defensive layers around a protected server. The attacker is outside, and each layer represents a different security control.",
+          "diseno": "Large layered cybersecurity defense diagram with minimal explanatory text."
+        },
+        {
+          "numero": 13,
+          "tipo": "conclusiones",
+          "titulo": "THE TAKEAWAY",
+          "subtitulo": "Attackers Scan. Defenders Must Know First.",
+          "contenido": {
+            "conclusiones": [
+              "Port scanning is reconnaissance, not necessarily exploitation.",
+              "Open ports are not automatically vulnerable.",
+              "Cisco detects and can prevent suspicious scanning.",
+              "Rapid7 prioritizes the vulnerabilities that matter.",
+              "Nessus identifies exposed services and known weaknesses.",
+              "Combining visibility, prevention and remediation reduces risk."
+            ],
+            "frase_final": "You cannot protect what you do not know is exposed."
+          },
+          "imagen": "Minimalist secure server glowing green against a nearly black background, with subtle incoming network traffic.",
+          "diseno": "Final sentence in enormous typography, with three small product labels at the bottom."
+        },
+        {
+          "numero": 14,
+          "tipo": "fuentes",
+          "titulo": "SOURCES & REFERENCES",
+          "contenido": {
+            "referencias": [
+              {
+                "nombre": "Cisco Secure Firewall — Port Scan Detection",
+                "url": "https://secure.cisco.com/secure-firewall/docs/port-scan-detection"
+              },
+              {
+                "nombre": "Rapid7 — Vulnerability Management Documentation",
+                "url": "https://docs.rapid7.com/insightvm/"
+              },
+              {
+                "nombre": "Rapid7 — Service Discovery",
+                "url": "https://docs.rapid7.com/insightvm/configuring-service-discovery/"
+              },
+              {
+                "nombre": "Tenable — Detecting Ports and Services",
+                "url": "https://docs.tenable.com/cyber-exposure-studies/application-software-security/Content/DetectingPorts.htm"
+              },
+              {
+                "nombre": "Tenable — Nessus Scan Templates",
+                "url": "https://docs.tenable.com/nessus/Content/ScanAndPolicyTemplates.htm"
+              },
+              {
+                "nombre": "Tenable — Nessus Plugins",
+                "url": "https://docs.tenable.com/nessus/Content/Plugins.htm"
+              }
+            ],
+            "nota": "Capabilities depend on product version, licensing, configuration, credentials and network visibility."
+          },
+          "imagen": "No image. Use official logos of Cisco, Rapid7 and Tenable.",
+          "diseno": "Two-column reference layout with readable URLs on a black background."
+        }
+      ]
+    }
+  },
+
+  {
+    "presentacion": {
+      "titulo": "Escaneo de Puertos, Explotación y Black October 2026",
+      "idioma": "es",
+      "total_diapositivas": 21,
+      "estructura": [
+        {
+          "seccion": "Escaneo de Puertos y Explotación",
+          "diapositivas": "1-13",
+          "instruccion": "Conservar el contenido original de las primeras 13 diapositivas."
+        },
+        {
+          "seccion": "Black October 2026",
+          "diapositivas": "14-20",
+          "instruccion": "Anexar las siete diapositivas especificadas."
+        },
+        {
+          "seccion": "Fuentes y Referencias",
+          "diapositiva": 21,
+          "instruccion": "Consolidar las referencias de ambas secciones."
+        }
+      ],
+      "diapositivas_anexadas": [
+        {
+          "numero": 14,
+          "tipo": "portada_seccion",
+          "titulo": "BLACK OCTOBER 2026",
+          "subtitulo": "Un mes de caos en la ciberseguridad",
+          "contenido": {
+            "descripcion": "Una oleada de incidentes de seguridad que involucró plataformas de inteligencia artificial, infraestructura en la nube, dependencias de software y vulnerabilidades críticas.",
+            "contexto": "Octubre de 2026 puso en evidencia los riesgos asociados con los servicios en la nube interconectados, las dependencias de terceros y los componentes críticos de software.",
+            "conexion": "De la explotación tradicional de redes a los ataques modernos contra la cadena de suministro y la infraestructura en la nube.",
+            "mensaje_clave": "Cuando la nube, el código y la confianza digital fueron atacados."
+          }
+        },
+        {
+          "numero": 15,
+          "tipo": "incidentes_principales",
+          "titulo": "LAS CUATRO GRANDES BRECHAS DE SEGURIDAD",
+          "subtitulo": "Plataformas en la nube y cadenas de suministro de IA",
+          "contenido": {
+            "introduccion": "Cuatro incidentes demostraron cómo comprometer una plataforma o dependencia puede exponer sistemas e infraestructura de sus clientes.",
+            "incidentes": [
+              {
+                "empresa": "Zeabur",
+                "metrica_principal": "3.2 millones",
+                "unidad": "Registros de variables de entorno",
+                "que_paso": "El compromiso de credenciales internas permitió acceder sin autorización a información de clientes e infraestructura.",
+                "datos": [
+                  "3,218,965 registros de variables de entorno expuestos",
+                  "321,810 cuentas relacionadas con los registros afectados",
+                  "Acceso no autorizado confirmado a 101 servidores dedicados de Google Cloud"
+                ],
+                "impacto": "Exposición de secretos de aplicaciones e infraestructura de clientes.",
+                "consecuencia": "La empresa anunció el cierre de sus operaciones."
+              },
+              {
+                "empresa": "Railway",
+                "metrica_principal": "1.85%",
+                "unidad": "Espacios de trabajo potencialmente afectados",
+                "que_paso": "Los atacantes comprometieron infraestructura relacionada con la compilación de aplicaciones y obtuvieron acceso a secretos de clientes.",
+                "datos": [
+                  "Hasta el 1.85% de los espacios de trabajo potencialmente afectados",
+                  "Aproximadamente 100,000 espacios de trabajo dentro del alcance máximo estimado",
+                  "Posible exposición de credenciales de bases de datos, claves API y secretos de servicios en la nube"
+                ],
+                "impacto": "Riesgo de acceso no autorizado a aplicaciones y servicios conectados.",
+                "aclaracion": "El número máximo de espacios de trabajo potencialmente afectados no equivale a un robo confirmado de credenciales en todos ellos."
+              },
+              {
+                "empresa": "LiteLLM",
+                "metrica_principal": "1.107.0",
+                "unidad": "Versión maliciosa del paquete",
+                "que_paso": "Los atacantes distribuyeron una versión comprometida de LiteLLM a través de canales oficiales de distribución de software.",
+                "datos": [
+                  "Ataque a la cadena de suministro de software",
+                  "Robo de credenciales de entornos de desarrollo y servicios en la nube",
+                  "El código malicioso podía ejecutarse al iniciar Python sin importar explícitamente LiteLLM"
+                ],
+                "impacto": "Compromiso de entornos de desarrollo confiables y exposición de credenciales."
+              },
+              {
+                "empresa": "OpenCode",
+                "metrica_principal": "1.4%",
+                "unidad": "Usuarios afectados de Console con proveedores externos vinculados",
+                "que_paso": "Se expusieron credenciales de proveedores externos de modelos de inteligencia artificial vinculados a OpenCode Console.",
+                "datos": [
+                  "El 1.4% de los usuarios de Console con proveedores externos vinculados resultó afectado",
+                  "Exposición de claves API de proveedores de inteligencia artificial",
+                  "Reportes de consumo no autorizado de API y cargos inesperados"
+                ],
+                "impacto": "Pérdidas económicas y consumo no autorizado de servicios de inteligencia artificial."
+              }
+            ],
+            "mensaje_clave": "Un solo componente comprometido puede exponer todo un ecosistema."
+          }
+        },
+        {
+          "numero": 16,
+          "tipo": "brechas_adicionales",
+          "titulo": "OTRAS SEIS PLATAFORMAS COMPROMETIDAS",
+          "subtitulo": "La superficie de ataque siguió creciendo",
+          "contenido": {
+            "introduccion": "Otros incidentes de seguridad afectaron proveedores de infraestructura de inteligencia artificial, servicios en la nube y herramientas de desarrollo.",
+            "incidentes": [
+              {
+                "empresa": "Fireworks AI",
+                "fecha": "2026-10-06",
+                "categoria": "Infraestructura de inteligencia artificial",
+                "incidente": "Acceso no autorizado a credenciales y secretos pertenecientes a determinados clientes.",
+                "riesgo": "Exposición de credenciales de clientes."
+              },
+              {
+                "empresa": "Andromeda",
+                "fecha": "2026-10-09",
+                "categoria": "Plataforma de inteligencia artificial",
+                "incidente": "Acceso no autorizado mediante credenciales comprometidas.",
+                "riesgo": "Uso no autorizado de recursos de la plataforma."
+              },
+              {
+                "empresa": "Lightning AI",
+                "fecha": "2026-10-15",
+                "categoria": "Desarrollo de inteligencia artificial",
+                "incidente": "Compromiso de credenciales relacionadas con la plataforma.",
+                "riesgo": "Exposición de recursos de desarrollo y credenciales de acceso."
+              },
+              {
+                "empresa": "Warp",
+                "fecha": "2026-10-23",
+                "categoria": "Herramientas para desarrolladores",
+                "incidente": "Incidente de seguridad de un proveedor externo que implicó una posible exposición de información de telemetría.",
+                "riesgo": "Exposición de información del entorno de desarrollo."
+              },
+              {
+                "empresa": "CommandCode",
+                "fecha": "2026-10-28",
+                "categoria": "Desarrollo de inteligencia artificial",
+                "incidente": "Compromiso de seguridad relacionado con el acceso a modelos de inteligencia artificial.",
+                "riesgo": "Acceso no autorizado a modelos y consumo indebido de recursos."
+              },
+              {
+                "empresa": "Northflank",
+                "fecha": "2026-10-30",
+                "categoria": "Infraestructura en la nube",
+                "incidente": "Compromiso de secretos almacenados en la plataforma.",
+                "riesgo": "Exposición de credenciales utilizadas por aplicaciones desplegadas."
+              }
+            ],
+            "patron_comun": [
+              "Robo de credenciales",
+              "Exposición de variables de entorno y secretos",
+              "Acceso no autorizado a infraestructura de desarrollo",
+              "Posible abuso de recursos en la nube y servicios de inteligencia artificial"
+            ],
+            "mensaje_clave": "Las plataformas de desarrollo se convirtieron en objetivos de alto valor porque almacenan accesos a otros sistemas."
+          }
+        },
+        {
+          "numero": 17,
+          "tipo": "vulnerabilidades_principales",
+          "titulo": "TRES VULNERABILIDADES CRÍTICAS",
+          "subtitulo": "Más allá de las brechas en la nube",
+          "contenido": {
+            "introduccion": "Octubre también puso en evidencia debilidades críticas en entornos de ejecución de software ampliamente utilizados y en la infraestructura de confianza digital.",
+            "vulnerabilidades": [
+              {
+                "nombre": "PHP2Shell",
+                "categoria": "Ejecución remota de código",
+                "identificadores": ["CVE-2026-109618", "CVE-2026-109619"],
+                "descripcion": "Vulnerabilidades relacionadas con la gestión de memoria en PHP que podrían permitir la ejecución remota de código sin autenticación.",
+                "mecanismo": [
+                  "Un atacante envía una entrada especialmente manipulada a un entorno PHP vulnerable.",
+                  "Bajo determinadas condiciones se produce corrupción de memoria.",
+                  "Una explotación exitosa puede permitir ejecutar código en el servidor."
+                ],
+                "impacto": [
+                  "Posible acceso no autorizado al servidor",
+                  "Compromiso de aplicaciones alojadas",
+                  "Exposición de información sensible"
+                ],
+                "alcance": "Su impacto potencial es significativo debido al uso extendido de PHP en la infraestructura web."
+              },
+              {
+                "nombre": "Node.js / Brotli",
+                "categoria": "Corrupción de memoria",
+                "identificadores": ["CVE-2026-111497"],
+                "descripcion": "Una vulnerabilidad en la descompresión Brotli puede provocar corrupción de memoria al procesar datos comprimidos maliciosos.",
+                "mecanismo": [
+                  "Una aplicación vulnerable procesa datos comprimidos con Brotli provenientes de una fuente no confiable.",
+                  "Los datos manipulados provocan corrupción de memoria.",
+                  "Las posibles consecuencias incluyen fallos del servicio, exposición de información o ejecución de código bajo ciertas condiciones."
+                ],
+                "impacto": [
+                  "Posible interrupción del servicio",
+                  "Compromiso de la seguridad de memoria",
+                  "Posible ejecución de código no autorizado"
+                ],
+                "alcance": "Relevante para aplicaciones e infraestructura que utilizan implementaciones vulnerables de Brotli."
+              },
+              {
+                "nombre": "eMudhra",
+                "categoria": "Seguridad de autoridades certificadoras",
+                "descripcion": "Se identificaron debilidades que permitían recuperar claves privadas asociadas con ocho autoridades certificadoras intermedias.",
+                "datos": [
+                  "8 autoridades certificadoras intermedias afectadas",
+                  "6 relacionadas con certificados TLS",
+                  "2 relacionadas con firma de código"
+                ],
+                "mecanismo": [
+                  "Se identifican debilidades en el material criptográfico de las autoridades certificadoras.",
+                  "Las claves privadas afectadas pueden ser recuperadas.",
+                  "Un atacante que posea esas claves podría emitir certificados fraudulentos dentro del ámbito de confianza afectado."
+                ],
+                "impacto": [
+                  "Compromiso de la confianza digital",
+                  "Posible emisión de certificados TLS fraudulentos",
+                  "Posible abuso de certificados de firma de código"
+                ],
+                "respuesta": "Las autoridades certificadoras afectadas requirieron restricciones de confianza o retirada de certificados."
+              }
+            ],
+            "mensaje_clave": "Una vulnerabilidad en infraestructura compartida puede afectar sistemas mucho más allá de una sola organización."
+          }
+        },
+        {
+          "numero": 18,
+          "tipo": "vulnerabilidades_adicionales",
+          "titulo": "OTRAS TRES VULNERABILIDADES CRÍTICAS",
+          "subtitulo": "Software empresarial y firmware",
+          "contenido": {
+            "introduccion": "También se identificaron vulnerabilidades críticas en aplicaciones empresariales, infraestructura de desarrollo y firmware.",
+            "vulnerabilidades": [
+              {
+                "nombre": "GitLab",
+                "categoria": "Ejecución remota de código",
+                "identificadores": ["CVE-2026-97229", "CVE-2026-110264"],
+                "severidad": "CVSS 10.0",
+                "descripcion": "Vulnerabilidades críticas que afectan determinadas versiones de instalaciones autogestionadas de GitLab.",
+                "impacto": [
+                  "Posible ejecución remota de código",
+                  "Compromiso de infraestructura de desarrollo",
+                  "Posible exposición de código fuente y recursos de integración y despliegue continuos"
+                ],
+                "mitigacion": "Aplicar las actualizaciones de seguridad correspondientes y restringir accesos innecesarios."
+              },
+              {
+                "nombre": "Oracle E-Business Suite",
+                "categoria": "Inyección SQL",
+                "identificadores": ["CVE-2026-101767"],
+                "severidad": "Crítica",
+                "descripcion": "Vulnerabilidad de inyección SQL sin autenticación que afecta implementaciones vulnerables de Oracle E-Business Suite.",
+                "impacto": [
+                  "Operaciones no autorizadas sobre bases de datos",
+                  "Posible compromiso de información empresarial",
+                  "Riesgo para sistemas financieros y operativos críticos"
+                ],
+                "mitigacion": "Aplicar los parches de Oracle y reducir la exposición de los servicios afectados."
+              },
+              {
+                "nombre": "EDK II PXE",
+                "categoria": "Corrupción de memoria en firmware",
+                "identificadores": ["CVE-2026-97631"],
+                "severidad": "Crítica",
+                "descripcion": "Vulnerabilidad de corrupción de memoria que afecta la funcionalidad de arranque por red en entornos de firmware vulnerables.",
+                "impacto": [
+                  "Posible ejecución de código antes de que inicie el sistema operativo",
+                  "Compromiso de entornos de arranque afectados",
+                  "Riesgo para infraestructura de aprovisionamiento mediante red"
+                ],
+                "mitigacion": "Aplicar actualizaciones de firmware y restringir la exposición innecesaria del arranque por red PXE."
+              }
+            ],
+            "mensaje_clave": "La superficie de ataque abarca desde el software de las aplicaciones hasta la infraestructura empresarial y el firmware."
+          }
+        },
+        {
+          "numero": 19,
+          "tipo": "concientizacion",
+          "titulo": "LA IA ESTÁ CAMBIANDO LA VELOCIDAD DE LOS CIBERATAQUES",
+          "subtitulo": "Las mismas amenazas, pero un ciclo más rápido",
+          "contenido": {
+            "introduccion": "La inteligencia artificial puede acelerar determinadas etapas de los ciberataques mediante la automatización del análisis, la programación y el procesamiento de información.",
+            "comparacion": {
+              "ataque_tradicional": [
+                {
+                  "fase": "Reconocimiento",
+                  "actividad": "Identificación manual de objetivos y servicios expuestos."
+                },
+                {
+                  "fase": "Investigación de vulnerabilidades",
+                  "actividad": "Revisión manual de versiones de software y avisos de seguridad."
+                },
+                {
+                  "fase": "Desarrollo de herramientas",
+                  "actividad": "Creación y adaptación manual de scripts."
+                },
+                {
+                  "fase": "Análisis",
+                  "actividad": "Interpretación manual de los resultados obtenidos."
+                }
+              ],
+              "ataque_asistido_por_ia": [
+                {
+                  "fase": "Reconocimiento",
+                  "actividad": "Análisis y clasificación automatizada de recursos descubiertos."
+                },
+                {
+                  "fase": "Investigación de vulnerabilidades",
+                  "actividad": "Correlación más rápida entre información de software y vulnerabilidades conocidas."
+                },
+                {
+                  "fase": "Desarrollo de herramientas",
+                  "actividad": "Generación asistida de scripts y automatización de procesos."
+                },
+                {
+                  "fase": "Análisis",
+                  "actividad": "Procesamiento rápido de grandes volúmenes de información técnica."
+                }
+              ]
+            },
+            "riesgos": [
+              {
+                "nombre": "Menores barreras técnicas",
+                "descripcion": "Las herramientas de IA pueden ayudar a atacantes menos experimentados a automatizar tareas que antes requerían mayores conocimientos técnicos."
+              },
+              {
+                "nombre": "Ingeniería social a gran escala",
+                "descripcion": "La IA puede facilitar la creación de mensajes de phishing personalizados y contenido engañoso."
+              },
+              {
+                "nombre": "Reconocimiento más rápido",
+                "descripcion": "La IA puede acelerar la interpretación de infraestructura expuesta y hallazgos de seguridad."
+              },
+              {
+                "nombre": "Abuso automatizado de credenciales",
+                "descripcion": "La automatización puede aumentar la velocidad y escala de los intentos de utilizar credenciales robadas."
+              }
+            ],
+            "aplicaciones_defensivas": [
+              "Detección automatizada de amenazas",
+              "Evaluación continua de vulnerabilidades",
+              "Correlación de eventos de seguridad",
+              "Asistencia durante la respuesta a incidentes",
+              "Detección de anomalías",
+              "Monitoreo de credenciales y límites de consumo"
+            ],
+            "limitaciones": "La IA no descubre ni explota automáticamente todas las vulnerabilidades. Su efectividad depende de los modelos, herramientas, permisos y entornos disponibles.",
+            "aclaracion": "La existencia de ciberataques asistidos por IA no demuestra que todos los incidentes de Black October hayan sido ejecutados utilizando inteligencia artificial.",
+            "mensaje_clave": "Los atacantes pueden automatizar más rápido. Los defensores deben responder de forma más inteligente."
+          }
+        },
+        {
+          "numero": 20,
+          "tipo": "conclusiones",
+          "titulo": "LAS LECCIONES DE BLACK OCTOBER",
+          "subtitulo": "Tu seguridad depende también de los sistemas en los que confías",
+          "contenido": {
+            "introduccion": "Black October demostró que los riesgos de seguridad se extienden más allá de las aplicaciones individuales e incluyen proveedores cloud, dependencias de software, credenciales e infraestructura de confianza digital.",
+            "aprendizajes": [
+              {
+                "titulo": "Proteger las credenciales",
+                "descripcion": "Rotar secretos expuestos, aplicar permisos mínimos y monitorear el uso de las API."
+              },
+              {
+                "titulo": "Asegurar la cadena de suministro",
+                "descripcion": "Verificar dependencias de terceros, actualizaciones de paquetes y procesos de despliegue."
+              },
+              {
+                "titulo": "Actualizar sistemas críticos",
+                "descripcion": "Mantener actualizados entornos de ejecución, bibliotecas, sistemas operativos y firmware."
+              },
+              {
+                "titulo": "Reducir la superficie de ataque",
+                "descripcion": "Cerrar puertos innecesarios, restringir accesos y segmentar la infraestructura sensible."
+              },
+              {
+                "titulo": "Prepararse para incidentes",
+                "descripcion": "Mantener procedimientos de respuesta, respaldos, monitoreo y capacidades de recuperación."
+              },
+              {
+                "titulo": "Utilizar la IA responsablemente",
+                "descripcion": "Implementar monitoreo de seguridad asistido por IA, manteniendo supervisión y validación humana."
+              }
+            ],
+            "conexion_con_escaneo_de_puertos": "El escaneo de puertos identifica servicios expuestos, mientras que los ataques modernos también pueden aprovechar dependencias confiables, infraestructura cloud y credenciales comprometidas.",
+            "mensaje_clave": "Tu código puede ser seguro. Tus dependencias podrían no serlo."
+          }
+        }
+      ],
+      "diapositiva_final": {
+        "numero": 21,
+        "tipo": "fuentes",
+        "titulo": "FUENTES Y REFERENCIAS",
+        "contenido": {
+          "escaneo_de_puertos": [
+            {
+              "fuente": "Documentación de Cisco Secure Firewall",
+              "tema": "Detección y prevención de escaneo de puertos",
+              "url": "https://secure.cisco.com/secure-firewall/docs/port-scan-detection"
+            },
+            {
+              "fuente": "Documentación de Rapid7 InsightVM",
+              "tema": "Gestión de vulnerabilidades y descubrimiento de servicios",
+              "url": "https://docs.rapid7.com/insightvm/"
+            },
+            {
+              "fuente": "Documentación de Tenable Nessus",
+              "tema": "Escaneo de puertos y evaluación de vulnerabilidades",
+              "url": "https://docs.tenable.com/nessus/"
+            }
+          ],
+          "black_october": [
+            {
+              "fuente": "Wiz Research",
+              "tema": "Incidentes de seguridad de Black October 2026"
+            },
+            {
+              "fuente": "Railway",
+              "tema": "Comunicados sobre su incidente de seguridad"
+            },
+            {
+              "fuente": "Zeabur",
+              "tema": "Comunicados sobre su incidente de seguridad"
+            },
+            {
+              "fuente": "LiteLLM",
+              "tema": "Aviso de seguridad sobre el ataque a la cadena de suministro"
+            },
+            {
+              "fuente": "CISA",
+              "tema": "Catálogo de vulnerabilidades explotadas conocidas",
+              "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog"
+            },
+            {
+              "fuente": "Node.js",
+              "tema": "Actualizaciones de seguridad",
+              "url": "https://nodejs.org/en/blog/vulnerability"
+            },
+            {
+              "fuente": "GitLab",
+              "tema": "Actualizaciones y avisos de seguridad",
+              "url": "https://about.gitlab.com/releases/categories/releases/"
+            },
+            {
+              "fuente": "Oracle",
+              "tema": "Actualizaciones críticas de seguridad",
+              "url": "https://www.oracle.com/security-alerts/"
+            }
+          ],
+          "seguridad_e_ia": [
+            {
+              "fuente": "MITRE ATLAS",
+              "tema": "Amenazas adversarias relacionadas con inteligencia artificial",
+              "url": "https://atlas.mitre.org/"
+            },
+            {
+              "fuente": "Google Threat Intelligence",
+              "tema": "Ciberamenazas asistidas por inteligencia artificial"
+            },
+            {
+              "fuente": "Microsoft Digital Defense Report",
+              "tema": "Tendencias de ciberseguridad y amenazas emergentes"
+            }
+          ]
+        }
+      }
+    }
+  }
+]
