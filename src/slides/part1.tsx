@@ -7,9 +7,8 @@ import { AnimatedBeam } from '@/components/ui/animated-beam'
 import { BorderBeam } from '@/components/ui/border-beam'
 import { OrbitingCircles } from '@/components/ui/orbiting-circles'
 import { TextShimmer } from '@/components/ui/text-shimmer'
-import { Card, Chip, KeyMessage, Logo, Node, P1, Reveal, Slide, Title, tools } from '@/kit'
+import { Card, Chip, KeyMessage, Logo, Node, Reveal, S, Slide, Title, tools } from '@/kit'
 
-const S = P1.diapositivas
 const DEF = 'var(--color-defense)'
 const THREAT = 'var(--color-threat)'
 
@@ -39,11 +38,11 @@ export function Cover() {
           </Reveal>
           <Reveal delay={0.25} className="mt-12">
             <TextShimmer as="p" duration={3} className="font-serif text-[64px] italic [--base-color:#8b8ba3] [--base-gradient-color:#2ee6d6] dark:[--base-color:#8b8ba3] dark:[--base-gradient-color:#2ee6d6]">
-              {s.contenido.frase!}
+              {s.contenido.frase_principal!}
             </TextShimmer>
           </Reveal>
           <Reveal delay={0.35}>
-            <p className="mt-6 max-w-[900px] text-[26px] leading-relaxed text-dim">{s.contenido.tema}</p>
+            <p className="mt-6 max-w-[900px] text-[26px] leading-relaxed text-dim">{s.contenido.introduccion}</p>
           </Reveal>
         </div>
 
@@ -94,7 +93,7 @@ export function Doors() {
       <div className="grid flex-1 grid-cols-[560px_1fr] gap-16">
         <div className="flex flex-col justify-center gap-10">
           <Reveal delay={0.2}>
-            <p className="text-[34px] leading-snug text-fg">{s.contenido.mensaje_principal}</p>
+            <p className="text-[34px] leading-snug text-fg">{s.contenido.concepto}</p>
           </Reveal>
           <Reveal delay={0.35}>
             <p className="border-l-2 border-threat/60 pl-6 font-serif text-[34px] italic leading-snug text-dim">{s.contenido.mensaje_clave}</p>
@@ -140,7 +139,7 @@ export function HowItWorks() {
     <Slide n={3} part="ps">
       <Title kicker={s.subtitulo} title={s.titulo} />
       <Reveal delay={0.15}>
-        <p className="max-w-[1300px] text-[32px] leading-snug text-dim">{s.contenido.mensaje_principal}</p>
+        <p className="max-w-[1300px] text-[32px] leading-snug text-dim">{s.contenido.definicion}</p>
       </Reveal>
       <div ref={box} className="relative mt-14 grid grid-cols-4 gap-12">
         {steps.map((st, k) => (
@@ -177,28 +176,28 @@ export function HowItWorks() {
 export function Chain() {
   const s = S[3]
   const c = s.contenido
-  const ex = c.ejemplo_hipotetico!
+  const ex = c.ejemplo!
   const exRows: [string, string][] = [
-    ['target', ex.objetivo], ['discovery', ex.descubrimiento], ['weakness', ex.debilidad], ['potential result', ex.resultado_potencial],
+    ['target', ex.escenario], ['discovery', ex.descubrimiento], ['weakness', ex.debilidad], ['potential result', ex.consecuencia_potencial],
   ]
   return (
     <Slide n={4} part="ps">
       <Title kicker={s.subtitulo} title={s.titulo} />
       <Reveal delay={0.1}>
-        <p className="max-w-[1400px] text-[28px] leading-snug text-dim">{c.mensaje_principal}</p>
+        <p className="max-w-[1400px] text-[28px] leading-snug text-dim">{c.concepto}</p>
       </Reveal>
       <div className="mt-12 flex items-stretch">
-        {c.flujo!.map((f, k, a) => {
+        {c.cadena_de_ataque!.map((f, k, a) => {
           const t = k / (a.length - 1)
           const col = `color-mix(in oklab, var(--color-threat) ${Math.round(15 + t * 85)}%, var(--color-dim))`
           return (
-            <Reveal key={f} delay={0.2 + k * 0.1} className="flex flex-1 items-center">
+            <Reveal key={f.paso} delay={0.2 + k * 0.1} className="flex flex-1 items-center">
               <div
                 className="flex h-[200px] flex-1 flex-col justify-between rounded-2xl border p-6"
                 style={{ borderColor: `color-mix(in oklab, ${col} 50%, transparent)`, background: `color-mix(in oklab, ${col} ${Math.round(4 + t * 14)}%, transparent)`, boxShadow: k === a.length - 1 ? `0 0 60px -10px ${col}` : undefined }}
               >
                 <span className="font-mono text-[16px]" style={{ color: col }}>0{k + 1}</span>
-                <span className="text-[26px] leading-tight font-medium text-fg">{f}</span>
+                <span className="text-[26px] leading-tight font-medium text-fg">{f.nombre}</span>
               </div>
               {k < a.length - 1 && <ArrowRight className="mx-2 shrink-0" size={22} style={{ color: col }} />}
             </Reveal>
@@ -241,10 +240,10 @@ export function Impact() {
       <Title kicker={s.subtitulo} title={s.titulo} />
       <div className="relative grid flex-1 grid-cols-2 gap-6">
         {r.map((x, k) => (
-          <Reveal key={x.titulo} delay={0.2 + k * 0.1}>
+          <Reveal key={x.nombre} delay={0.2 + k * 0.1}>
             <Card glow="#ff3d7125" className={`flex h-full flex-col justify-center ${k % 2 ? 'pl-[150px]' : 'pr-[150px]'}`}>
               <span className="mb-3 font-mono text-[15px] tracking-[0.2em] text-threat uppercase">risk 0{k + 1}</span>
-              <h3 className="mb-2 text-[40px] font-semibold tracking-tight text-fg">{x.titulo}</h3>
+              <h3 className="mb-2 text-[40px] font-semibold tracking-tight text-fg">{x.nombre}</h3>
               <p className="text-[24px] text-dim">{x.descripcion}</p>
             </Card>
           </Reveal>
@@ -261,7 +260,11 @@ export function Impact() {
       <Reveal delay={0.7} className="mt-8">
         <div className="flex items-center gap-6 rounded-2xl border border-assess/30 bg-assess/5 px-8 py-5">
           <Chip color="var(--color-assess)">data science</Chip>
-          <p className="text-[24px] leading-snug text-fg">{s.contenido.relevancia_data_science}</p>
+          <ul className="space-y-1">
+            {(s.contenido.relacion_con_ciencia_de_datos as string[]).map((x) => (
+              <li key={x} className="text-[22px] leading-snug text-fg">{x}</li>
+            ))}
+          </ul>
         </div>
       </Reveal>
     </Slide>
@@ -287,7 +290,7 @@ export function ThreeTools() {
                 </div>
                 <div>
                   <div className="mb-3 text-[60px] font-semibold tracking-tight text-fg">{t.producto}</div>
-                  <div className="font-mono text-[26px] tracking-[0.12em] uppercase" style={{ color: tool.color }}>{t.enfoque}</div>
+                  <div className="font-mono text-[26px] tracking-[0.12em] uppercase" style={{ color: tool.color }}>{t.categoria}</div>
                 </div>
               </div>
             </Reveal>
@@ -300,11 +303,9 @@ export function ThreeTools() {
 }
 
 /* 07–09 — Product deep dives */
-type Product = (typeof S)[6]['contenido'] & { dato_tecnico?: string }
-
 function ProductSlide({ n, idx, diagram }: { n: number; idx: number; diagram: React.ReactNode }) {
   const s = S[6 + idx]
-  const c = s.contenido as Product
+  const c = s.contenido
   const tool = tools[idx]
   return (
     <Slide n={n} part="ps">
@@ -328,10 +329,10 @@ function ProductSlide({ n, idx, diagram }: { n: number; idx: number; diagram: Re
           <Card glow={tool.glow} className="h-full">
             <h3 className="mb-6 font-mono text-[15px] tracking-[0.22em] text-dim uppercase">How it works</h3>
             <ol className="space-y-6">
-              {c.como_funciona!.map((x, k) => (
-                <li key={x} className="flex gap-4 text-[25px] leading-snug text-fg">
+              {c.funcionamiento!.map((x, k) => (
+                <li key={x.paso} className="flex gap-4 text-[25px] leading-snug text-fg">
                   <span className="mt-0.5 font-mono text-[16px]" style={{ color: tool.color }}>0{k + 1}</span>
-                  {x}
+                  {x.descripcion}
                 </li>
               ))}
             </ol>
@@ -344,7 +345,7 @@ function ProductSlide({ n, idx, diagram }: { n: number; idx: number; diagram: Re
           <Card glow={tool.glow} className="flex-1 p-7">
             <h3 className="mb-4 font-mono text-[15px] tracking-[0.22em] text-dim uppercase">Capabilities</h3>
             <ul className="space-y-2.5">
-              {c.caracteristicas_tecnicas!.map((x) => (
+              {c.capacidades!.map((x) => (
                 <li key={x} className="flex items-start gap-3 text-[21px] leading-snug text-fg">
                   <Check size={20} className="mt-1 shrink-0" style={{ color: tool.color }} /> {x}
                 </li>
@@ -354,7 +355,7 @@ function ProductSlide({ n, idx, diagram }: { n: number; idx: number; diagram: Re
           <Card glow="#ff3d7120" className="p-7">
             <h3 className="mb-4 font-mono text-[15px] tracking-[0.22em] text-threat/80 uppercase">Limitations</h3>
             <ul className="space-y-2.5">
-              {c.limitaciones!.map((x) => (
+              {(c.limitaciones as string[]).map((x) => (
                 <li key={x} className="flex items-start gap-3 text-[19px] leading-snug text-dim">
                   <Minus size={20} className="mt-0.5 shrink-0 text-threat/80" /> {x}
                 </li>
@@ -438,7 +439,7 @@ function RiskDashboard() {
   )
 }
 
-function ScannerDiagram({ note }: { note?: string }) {
+function ScannerDiagram() {
   const box = useRef<HTMLDivElement>(null)
   const hub = useRef<HTMLDivElement>(null)
   const ports = [22, 443, 8443]
@@ -470,27 +471,27 @@ function ScannerDiagram({ note }: { note?: string }) {
           <AnimatedBeam key={`f${k}`} containerRef={box} fromRef={hub} toRef={r} duration={3} delay={1.2 + k * 0.3} gradientStartColor="#ffffff" gradientStopColor="#60a5fa" />
         ))}
       </div>
-      {note && <p className="border-t border-line px-7 py-5 text-[17px] leading-snug text-dim">{note}</p>}
     </div>
   )
 }
 
 export const Cisco = () => <ProductSlide n={7} idx={0} diagram={<FirewallDiagram />} />
 export const Rapid7 = () => <ProductSlide n={8} idx={1} diagram={<RiskDashboard />} />
-export const Nessus = () => <ProductSlide n={9} idx={2} diagram={<ScannerDiagram note={(S[8].contenido as Product).dato_tecnico} />} />
+export const Nessus = () => <ProductSlide n={9} idx={2} diagram={<ScannerDiagram />} />
 
 /* 10 — Comparison matrix */
 function verdict(v: string) {
-  if (v.startsWith('Yes')) return { Icon: Check, c: DEF }
-  if (v === 'No') return { Icon: X, c: THREAT }
-  if (v.startsWith('Not')) return { Icon: Minus, c: 'var(--color-faint)' }
+  if (v.startsWith('Sí')) return { Icon: Check, c: DEF }
+  if (v.startsWith('No es')) return { Icon: Minus, c: 'var(--color-faint)' }
+  if (v.startsWith('No')) return { Icon: X, c: THREAT }
   return { Icon: CircleDot, c: 'var(--color-assess)' }
 }
 
 export function Compare() {
   const s = S[9]
   const c = s.contenido
-  const rows = c.filas!
+  const rows = c.comparacion as { capacidad: string; cisco: string; rapid7: string; tenable: string }[]
+  const names = S[5].contenido.herramientas!
   const keys = ['cisco', 'rapid7', 'tenable'] as const
   const msg = c.mensaje_clave!.split(/(?<=\.)\s+/)
   return (
@@ -499,11 +500,11 @@ export function Compare() {
       <Reveal delay={0.2}>
         <div className="overflow-hidden rounded-3xl border border-line bg-panel/70 backdrop-blur">
           <div className="grid grid-cols-[440px_1fr_1fr_1fr] border-b border-line">
-            <div className="px-8 py-6 font-mono text-[14px] tracking-[0.2em] text-dim uppercase">{c.columnas![0]}</div>
+            <div className="px-8 py-6 font-mono text-[14px] tracking-[0.2em] text-dim uppercase">Capacidad</div>
             {tools.map((t, k) => (
               <div key={t.brand} className="flex flex-col gap-3 border-l border-line px-8 py-6">
                 <Logo brand={t.brand} size={38} />
-                <span className="text-[17px] text-dim">{c.columnas![k + 1]}</span>
+                <span className="text-[17px] text-dim">{names[k].producto}</span>
               </div>
             ))}
           </div>
@@ -561,7 +562,11 @@ export function Scenario() {
           </div>
           <div>
             <div className="mb-2 font-mono text-[14px] tracking-[0.2em] text-threat uppercase">attack</div>
-            <p className="text-[26px] leading-snug text-fg">{c.ataque}</p>
+            <ol className="space-y-1">
+              {c.secuencia_del_ataque!.map((x) => (
+                <li key={x.paso} className="text-[22px] leading-snug text-fg">{x.accion}</li>
+              ))}
+            </ol>
           </div>
         </Reveal>
         <Reveal delay={0.25}>
@@ -583,7 +588,7 @@ export function Scenario() {
         </Reveal>
       </div>
       <div className="mt-8 grid grid-cols-3 gap-6">
-        {c.respuestas!.map((r, k) => (
+        {c.respuesta_de_las_herramientas!.map((r, k) => (
           <Reveal key={r.herramienta} delay={0.45 + k * 0.1}>
             <Card glow={tools[k].glow} className="h-full p-7">
               <div className="mb-4 flex items-center justify-between">
@@ -606,7 +611,7 @@ export function Scenario() {
 /* 12 — Defense in depth */
 export function Depth() {
   const s = S[11]
-  const layers = s.contenido.estrategia!
+  const layers = s.contenido.capas!
   const col = ['var(--color-fg)', DEF, 'var(--color-assess)', 'var(--color-scan)', 'var(--color-fg)']
   const hex = ['#ececf4', '#2ee6d6', '#a78bfa', '#60a5fa', '#ececf4']
   return (
@@ -634,11 +639,11 @@ export function Depth() {
           <Title kicker={s.subtitulo} title={s.titulo} size={96} className="mb-6" />
           <div className="flex flex-col gap-3">
             {layers.map((l, k) => (
-              <Reveal key={l.capa} delay={0.25 + k * 0.1}>
+              <Reveal key={l.nombre} delay={0.25 + k * 0.1}>
                 <div className="flex items-center gap-6 rounded-2xl border border-line bg-panel/70 px-7 py-3">
-                  <span className="font-mono text-[34px] font-light" style={{ color: col[k] }}>{l.capa.split('.')[0]}</span>
+                  <span className="font-mono text-[34px] font-light" style={{ color: col[k] }}>{l.numero}</span>
                   <div>
-                    <div className="text-[24px] font-semibold text-fg">{l.capa.replace(/^\d+\.\s*/, '')}</div>
+                    <div className="text-[24px] font-semibold text-fg">{l.nombre}</div>
                     <div className="text-[19px] text-dim">{l.accion}</div>
                   </div>
                 </div>
@@ -657,7 +662,7 @@ export function Takeaway() {
   const s = S[12]
   const c = s.contenido
   const [head, last] = (() => {
-    const w = c.frase_final!.replace(/\.$/, '').split(' ')
+    const w = c.mensaje_clave!.replace(/\.$/, '').split(' ')
     return [w.slice(0, -1).join(' '), w.at(-1)]
   })()
   return (

@@ -6,13 +6,9 @@ import { SpotlightCard } from '@/components/ui/spotlight-card'
 import { cn } from '@/lib/utils'
 import raw from '../contenido.json'
 
-type Raw = (typeof raw)[number]
-const part1 = (raw as Raw[]).find((r) => 'diapositivas' in r.presentacion) as Extract<Raw, { presentacion: { diapositivas: unknown } }>
-const part2 = (raw as Raw[]).find((r) => 'diapositivas_anexadas' in r.presentacion) as Extract<Raw, { presentacion: { diapositivas_anexadas: unknown } }>
-
-export const P1 = part1.presentacion
-export const P2 = part2.presentacion
-export const TOTAL = P2.total_diapositivas
+export const P = raw.presentacion
+export const S = P.diapositivas
+export const TOTAL = P.total_diapositivas
 
 export type Part = 'ps' | 'bo'
 export const accent = { ps: 'var(--color-defense)', bo: 'var(--color-ember)' } as const
@@ -70,7 +66,7 @@ export function Slide({
             <span className="absolute inset-0 animate-pulse-ring rounded-full" style={{ background: a }} />
             <span className="relative size-2 rounded-full" style={{ background: a }} />
           </span>
-          {label ?? (part === 'ps' ? P1.titulo : P2.diapositivas_anexadas[0].titulo)}
+          {label ?? (part === 'ps' ? S[0].titulo : S[13].titulo)}
         </span>
         <span>
           <span className="text-fg">{String(n).padStart(2, '0')}</span> / {TOTAL}

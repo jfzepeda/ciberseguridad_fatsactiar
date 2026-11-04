@@ -4,9 +4,9 @@ import {
 } from 'lucide-react'
 import { BorderBeam } from '@/components/ui/border-beam'
 import { TextShimmer } from '@/components/ui/text-shimmer'
-import { Card, Chip, KeyMessage, P1, P2, Reveal, Slide, Title } from '@/kit'
+import { Card, Chip, KeyMessage, P, Reveal, S, Slide, Title } from '@/kit'
 
-const A = P2.diapositivas_anexadas
+const A = S.slice(13)
 const EMBER = 'var(--color-ember)'
 const THREAT = 'var(--color-threat)'
 const DEF = 'var(--color-defense)'
@@ -45,7 +45,7 @@ export function BOCover() {
           </Reveal>
           <Reveal delay={0.25} className="mt-10">
             <TextShimmer as="p" duration={3} className="text-[40px] font-medium [--base-color:#8b8ba3] [--base-gradient-color:#ff8a3d] dark:[--base-color:#8b8ba3] dark:[--base-gradient-color:#ff8a3d]">
-              {s.subtitulo}
+              {s.subtitulo!}
             </TextShimmer>
           </Reveal>
           <Reveal delay={0.35}>
@@ -190,7 +190,7 @@ export function SixMore() {
       </div>
       <Reveal delay={1.1} className="mt-8 flex flex-wrap items-center gap-3">
         <span className="mr-2 font-mono text-[14px] tracking-[0.2em] text-dim uppercase">Patrón común</span>
-        {c.patron_comun!.map((p) => (
+        {c.patrones_comunes!.map((p) => (
           <Chip key={p} color={THREAT} className="normal-case tracking-normal text-[16px]">{p}</Chip>
         ))}
       </Reveal>
@@ -320,10 +320,12 @@ export function MoreFlaws() {
 }
 
 /* 19 — AI speed */
+type Fase = { fase: string; actividad: string }
+
 export function AISpeed() {
   const s = A[5]
   const c = s.contenido
-  const cmp = c.comparacion!
+  const cmp = c.comparacion as { ataque_tradicional: Fase[]; ataque_asistido_por_ia: Fase[] }
   const trad = cmp.ataque_tradicional
   const ai = cmp.ataque_asistido_por_ia
   return (
@@ -441,15 +443,12 @@ export function Lessons() {
 type Ref = { fuente: string; tema?: string; url?: string }
 
 export function Sources() {
-  const s = P2.diapositiva_final
+  const s = S[20]
   const c = s.contenido
-  const ps1 = P1.diapositivas.at(-1)!.contenido
-  const portRefs: Ref[] = ps1.referencias!.map((r) => ({ fuente: r.nombre, url: r.url }))
-  for (const r of c.escaneo_de_puertos) if (!portRefs.some((p) => p.url === r.url)) portRefs.push(r)
   const cols: [string, Ref[], string][] = [
-    ['Escaneo de puertos', portRefs, DEF],
-    ['Black October', c.black_october, EMBER],
-    ['Seguridad e IA', c.seguridad_e_ia, 'var(--color-assess)'],
+    ['Escaneo de puertos', c.escaneo_de_puertos!, DEF],
+    ['Black October', c.black_october!, EMBER],
+    ['Seguridad e IA', c.seguridad_e_inteligencia_artificial!, 'var(--color-assess)'],
   ]
   return (
     <Slide n={21} part="bo" label={s.titulo}>
@@ -477,7 +476,7 @@ export function Sources() {
         ))}
       </div>
       <Reveal delay={0.6}>
-        <p className="mt-6 text-[16px] text-faint">* {ps1.nota}</p>
+        <p className="mt-6 text-[16px] text-faint">* {P.nota_de_verificacion}</p>
       </Reveal>
     </Slide>
   )
