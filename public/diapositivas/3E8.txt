@@ -1,0 +1,27 @@
+numero: 4
+tipo: explicacion_ataque
+titulo: DEL ESCANEO A LA EXPLOTACIÓN
+subtitulo: El reconocimiento es solamente el comienzo
+contenido:
+  concepto: El escaneo permite identificar servicios expuestos. La explotación ocurre cuando un atacante aprovecha
+    una vulnerabilidad o configuración insegura para obtener acceso o ejecutar acciones no autorizadas.
+  cadena_de_ataque:
+  - paso: 1
+    nombre: Descubrir un puerto abierto
+  - paso: 2
+    nombre: Identificar el servicio disponible
+  - paso: 3
+    nombre: Determinar su versión o configuración
+  - paso: 4
+    nombre: Investigar vulnerabilidades conocidas
+  - paso: 5
+    nombre: Intentar aprovechar una vulnerabilidad
+  - paso: 6
+    nombre: Obtener acceso no autorizado, si la explotación tiene éxito
+  ejemplo:
+    escenario: Servidor empresarial con SSH accesible desde internet.
+    descubrimiento: Puerto 22 abierto.
+    debilidad: Credenciales débiles o una versión vulnerable del servicio.
+    consecuencia_potencial: Acceso remoto no autorizado al servidor.
+  aclaracion: La exposición de SSH no implica por sí misma que el servidor sea vulnerable.
+  mensaje_clave: El escaneo identifica oportunidades. Las vulnerabilidades hacen posible la explotación.

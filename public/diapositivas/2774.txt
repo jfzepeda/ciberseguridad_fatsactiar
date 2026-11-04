@@ -1,0 +1,40 @@
+numero: 10
+tipo: comparacion
+titulo: DETECTAR, EVALUAR Y PREVENIR
+subtitulo: Comparación entre Cisco, Rapid7 y Tenable
+contenido:
+  introduccion: Aunque las tres herramientas contribuyen a mejorar la seguridad, cada una está especializada en
+    una función diferente.
+  comparacion:
+  - capacidad: Detectar escaneos de puertos sospechosos
+    cisco: Sí, mediante inspección del tráfico.
+    rapid7: No es su función principal.
+    tenable: No es su función principal.
+  - capacidad: Bloquear tráfico de escaneo
+    cisco: Sí, con prevención configurada.
+    rapid7: No directamente.
+    tenable: No directamente.
+  - capacidad: Descubrir puertos expuestos
+    cisco: Observa conexiones y tráfico de red.
+    rapid7: Sí, mediante descubrimiento activo.
+    tenable: Sí, mediante escaneo activo.
+  - capacidad: Identificar vulnerabilidades conocidas
+    cisco: Mediante funciones de inspección y protección aplicables.
+    rapid7: Sí, es una capacidad principal.
+    tenable: Sí, es una capacidad principal.
+  - capacidad: Priorizar correcciones
+    cisco: No es su función principal.
+    rapid7: Sí, con herramientas de priorización y seguimiento.
+    tenable: Ofrece severidad y recomendaciones de corrección.
+  - capacidad: Función principal
+    cisco: Protección del tráfico de red.
+    rapid7: Gestión continua de vulnerabilidades.
+    tenable: Evaluación técnica de vulnerabilidades.
+  diferencias_clave:
+  - producto: Cisco Secure Firewall
+    especialidad: Prevención y control del tráfico.
+  - producto: Rapid7 InsightVM
+    especialidad: Gestión y priorización del riesgo.
+  - producto: Tenable Nessus
+    especialidad: Descubrimiento y evaluación técnica.
+  mensaje_clave: Cisco protege el tráfico, Rapid7 administra el riesgo y Nessus identifica las debilidades técnicas.

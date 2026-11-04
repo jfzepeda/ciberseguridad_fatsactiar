@@ -1,0 +1,33 @@
+numero: 8
+tipo: solucion
+titulo: RAPID7 INSIGHTVM
+subtitulo: Encontrar las debilidades antes que los atacantes
+contenido:
+  empresa: Rapid7
+  producto: InsightVM
+  categoria: Plataforma de gestión de vulnerabilidades
+  funcion_principal: Descubrir activos y servicios, identificar vulnerabilidades y ayudar a priorizar su corrección.
+  funcionamiento:
+  - paso: 1
+    descripcion: Descubre dispositivos y activos dentro del alcance autorizado.
+  - paso: 2
+    descripcion: Analiza puertos y servicios accesibles.
+  - paso: 3
+    descripcion: Identifica vulnerabilidades conocidas y configuraciones inseguras.
+  - paso: 4
+    descripcion: Evalúa y prioriza los hallazgos de acuerdo con criterios de riesgo.
+  - paso: 5
+    descripcion: Facilita el seguimiento de correcciones y nuevas evaluaciones.
+  capacidades:
+  - Descubrimiento de puertos TCP y UDP
+  - Identificación de servicios
+  - Escaneos autenticados
+  - Motores de escaneo distribuidos
+  - Priorización de vulnerabilidades
+  - Seguimiento de remediación
+  limitaciones:
+  - No bloquea directamente los escaneos maliciosos como función principal.
+  - Los resultados dependen de la visibilidad y las credenciales disponibles.
+  - Las vulnerabilidades detectadas deben corregirse mediante acciones adicionales.
+  mensaje_clave: Rapid7 ayuda a identificar qué vulnerabilidades representan mayor riesgo y cuáles deben corregirse
+    primero.

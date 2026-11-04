@@ -1,0 +1,59 @@
+numero: 17
+tipo: vulnerabilidades_principales
+titulo: TRES VULNERABILIDADES CRÍTICAS
+subtitulo: Más allá de las brechas en la nube
+contenido:
+  introduccion: Octubre también puso en evidencia debilidades críticas en entornos de ejecución de software ampliamente
+    utilizados y en la infraestructura de confianza digital.
+  vulnerabilidades:
+  - nombre: PHP2Shell
+    categoria: Ejecución remota de código
+    identificadores:
+    - CVE-2026-109618
+    - CVE-2026-109619
+    descripcion: Vulnerabilidades relacionadas con la gestión de memoria en PHP que podrían permitir la ejecución
+      remota de código sin autenticación.
+    mecanismo:
+    - Un atacante envía una entrada especialmente manipulada a un entorno PHP vulnerable.
+    - Bajo determinadas condiciones se produce corrupción de memoria.
+    - Una explotación exitosa puede permitir ejecutar código en el servidor.
+    impacto:
+    - Posible acceso no autorizado al servidor
+    - Compromiso de aplicaciones alojadas
+    - Exposición de información sensible
+    alcance: Su impacto potencial es significativo debido al uso extendido de PHP en la infraestructura web.
+  - nombre: Node.js / Brotli
+    categoria: Corrupción de memoria
+    identificadores:
+    - CVE-2026-111497
+    descripcion: Una vulnerabilidad en la descompresión Brotli puede provocar corrupción de memoria al procesar
+      datos comprimidos maliciosos.
+    mecanismo:
+    - Una aplicación vulnerable procesa datos comprimidos con Brotli provenientes de una fuente no confiable.
+    - Los datos manipulados provocan corrupción de memoria.
+    - Las posibles consecuencias incluyen fallos del servicio, exposición de información o ejecución de código bajo
+      ciertas condiciones.
+    impacto:
+    - Posible interrupción del servicio
+    - Compromiso de la seguridad de memoria
+    - Posible ejecución de código no autorizado
+    alcance: Relevante para aplicaciones e infraestructura que utilizan implementaciones vulnerables de Brotli.
+  - nombre: eMudhra
+    categoria: Seguridad de autoridades certificadoras
+    descripcion: Se identificaron debilidades que permitían recuperar claves privadas asociadas con ocho autoridades
+      certificadoras intermedias.
+    datos:
+    - 8 autoridades certificadoras intermedias afectadas
+    - 6 relacionadas con certificados TLS
+    - 2 relacionadas con firma de código
+    mecanismo:
+    - Se identifican debilidades en el material criptográfico de las autoridades certificadoras.
+    - Las claves privadas afectadas pueden ser recuperadas.
+    - Un atacante que posea esas claves podría emitir certificados fraudulentos dentro del ámbito de confianza afectado.
+    impacto:
+    - Compromiso de la confianza digital
+    - Posible emisión de certificados TLS fraudulentos
+    - Posible abuso de certificados de firma de código
+    respuesta: Las autoridades certificadoras afectadas requirieron restricciones de confianza o retirada de certificados.
+  mensaje_clave: Una vulnerabilidad en infraestructura compartida puede afectar sistemas mucho más allá de una sola
+    organización.

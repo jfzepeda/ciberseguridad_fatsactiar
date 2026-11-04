@@ -1,0 +1,26 @@
+numero: 5
+tipo: impacto
+titulo: ¿POR QUÉ ES PELIGROSO?
+subtitulo: Un servicio vulnerable puede comprometer toda una infraestructura
+contenido:
+  riesgos:
+  - nombre: Acceso no autorizado
+    descripcion: Un atacante puede comprometer servicios que utilizan credenciales débiles o software vulnerable.
+  - nombre: Exfiltración de datos
+    descripcion: Un sistema comprometido puede permitir el robo de información confidencial.
+  - nombre: Interrupción de servicios
+    descripcion: La explotación puede provocar fallos, indisponibilidad o interrupciones operativas.
+  - nombre: Movimiento lateral
+    descripcion: Un atacante puede utilizar un equipo comprometido para intentar acceder a otros sistemas internos.
+  relacion_con_ciencia_de_datos:
+  - Las bases de datos expuestas pueden contener información sensible.
+  - Los servidores de notebooks pueden permitir ejecución de código.
+  - Los endpoints de modelos de IA pueden ser utilizados sin autorización.
+  - La manipulación de datos puede comprometer la integridad de análisis y modelos.
+  - La indisponibilidad de infraestructura puede detener pipelines de datos.
+  principios_afectados:
+  - Confidencialidad
+  - Integridad
+  - Disponibilidad
+  mensaje_clave: La seguridad de los datos depende también de la seguridad de los servicios que permiten acceder
+    a ellos.

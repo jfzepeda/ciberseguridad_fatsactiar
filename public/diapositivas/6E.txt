@@ -1,0 +1,30 @@
+numero: 3
+tipo: explicacion_ataque
+titulo: ¿CÓMO FUNCIONA EL ESCANEO DE PUERTOS?
+subtitulo: Descubriendo los puntos de entrada
+contenido:
+  definicion: El escaneo de puertos consiste en enviar solicitudes de red a diferentes puertos de un dispositivo
+    para identificar cuáles responden y qué servicios podrían estar disponibles.
+  etapas:
+  - paso: 1
+    nombre: Identificación del objetivo
+    descripcion: Se localizan dispositivos o direcciones IP accesibles.
+  - paso: 2
+    nombre: Exploración de puertos
+    descripcion: Se envían solicitudes TCP o UDP a los puertos seleccionados.
+  - paso: 3
+    nombre: Análisis de respuestas
+    descripcion: Se clasifican los puertos como abiertos, cerrados o filtrados.
+  - paso: 4
+    nombre: Identificación de servicios
+    descripcion: Se intenta determinar qué aplicaciones o protocolos están disponibles.
+  tipos_de_escaneo:
+  - tipo: TCP Connect
+    descripcion: Intenta establecer conexiones TCP completas.
+  - tipo: TCP SYN
+    descripcion: Utiliza solicitudes de inicio de conexión para identificar puertos disponibles.
+  - tipo: UDP
+    descripcion: Envía solicitudes UDP e interpreta las respuestas o su ausencia.
+  aclaracion: El escaneo de puertos también es una práctica legítima utilizada por administradores y auditores de
+    seguridad.
+  mensaje_clave: El atacante busca construir un mapa de la infraestructura antes de intentar explotarla.

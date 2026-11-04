@@ -1,0 +1,8 @@
+numero: 1
+tipo: portada
+titulo: ESCANEO DE PUERTOS Y EXPLOTACIÓN
+subtitulo: Cómo los atacantes descubren vulnerabilidades y cómo podemos detenerlos
+contenido:
+  introduccion: Análisis de los ataques de reconocimiento y explotación de servicios de red, sus consecuencias y
+    las soluciones de Cisco Secure Firewall, Rapid7 InsightVM y Tenable Nessus.
+  frase_principal: Cada puerto abierto representa un posible punto de entrada.

@@ -1,0 +1,30 @@
+numero: 7
+tipo: solucion
+titulo: CISCO SECURE FIREWALL
+subtitulo: Detectar el escaneo y bloquear el origen
+contenido:
+  empresa: Cisco
+  producto: Cisco Secure Firewall
+  categoria: Firewall de nueva generación
+  funcion_principal: Inspeccionar el tráfico de red e identificar comportamientos potencialmente maliciosos.
+  funcionamiento:
+  - paso: 1
+    descripcion: El firewall observa el tráfico que atraviesa los segmentos de red protegidos.
+  - paso: 2
+    descripcion: Analiza patrones de conexiones y solicitudes a múltiples puertos.
+  - paso: 3
+    descripcion: Identifica comportamientos compatibles con escaneos de puertos.
+  - paso: 4
+    descripcion: Genera eventos de seguridad y puede bloquear el origen cuando la prevención está habilitada.
+  capacidades:
+  - Detección de determinados escaneos TCP y UDP
+  - Detección de patrones de escaneo distribuido
+  - Integración con políticas de control de acceso
+  - Modos de detección y prevención
+  - Registro de eventos de seguridad
+  limitaciones:
+  - Necesita visibilidad del tráfico para detectar el comportamiento.
+  - La efectividad depende de la configuración y las políticas aplicadas.
+  - Los mecanismos de prevención pueden producir falsos positivos.
+  - No sustituye una evaluación completa de vulnerabilidades.
+  mensaje_clave: Cisco se enfoca en detectar y detener tráfico sospechoso durante el reconocimiento.
