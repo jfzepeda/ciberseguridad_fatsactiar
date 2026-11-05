@@ -8,6 +8,7 @@ import { BorderBeam } from '@/components/ui/border-beam'
 import { OrbitingCircles } from '@/components/ui/orbiting-circles'
 import { TextShimmer } from '@/components/ui/text-shimmer'
 import { Card, Chip, KeyMessage, Logo, Node, Reveal, S, Slide, Title, tools } from '@/kit'
+import { useIsDark } from '@/lib/theme'
 import { BentoImpact } from '@/components/ui/bento'
 import { PinnedSteps } from '@/components/ui/how-it-works'
 import { GradientCard } from '@/components/ui/gradient-card'
@@ -33,7 +34,7 @@ export function Cover() {
             </h1>
           </Reveal>
           <Reveal delay={0.2} className="mt-7">
-            <TextShimmer as="p" duration={3} className="font-serif text-[52px] italic [--base-color:#8b8ba3] [--base-gradient-color:#2ee6d6] dark:[--base-color:#8b8ba3] dark:[--base-gradient-color:#2ee6d6]">
+            <TextShimmer as="p" duration={3} className="font-serif text-[52px] italic [--base-color:var(--color-dim)] [--base-gradient-color:var(--color-defense)] dark:[--base-color:#8b8ba3] dark:[--base-gradient-color:#2ee6d6]">
               {s.contenido.frase_principal!}
             </TextShimmer>
           </Reveal>
@@ -237,6 +238,7 @@ export function Impact() {
 export function ThreeTools() {
   const s = S[5]
   const h = s.contenido.herramientas!
+  const hi = useIsDark() ? '#ffffff' : '#111119'
   return (
     <Slide n={6} part="ps" bg="aurora">
       <Title title={s.titulo} size={104} className="mb-6" />
@@ -246,7 +248,7 @@ export function ThreeTools() {
           return (
             <Reveal key={t.empresa} delay={0.2 + k * 0.15}>
               <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[32px] border border-line bg-panel/70 p-10 backdrop-blur">
-                <BorderBeam size={220} duration={10} delay={k * 3} colorFrom={['#2ee6d6', '#a78bfa', '#60a5fa'][k]} colorTo="#ffffff" />
+                <BorderBeam size={220} duration={10} delay={k * 3} colorFrom={['#2ee6d6', '#a78bfa', '#60a5fa'][k]} colorTo={hi} />
                 <div className="flex h-[160px] items-center">
                   <Logo brand={tool.brand} size={130} />
                 </div>
@@ -399,6 +401,7 @@ function RiskDashboard() {
 
 function ScannerDiagram() {
   const box = useRef<HTMLDivElement>(null)
+  const hi = useIsDark() ? '#ffffff' : '#111119'
   const hub = useRef<HTMLDivElement>(null)
   const ports = [22, 443, 8443]
   const sev = [
@@ -423,10 +426,10 @@ function ScannerDiagram() {
           ))}
         </div>
         {pr.map((r, k) => (
-          <AnimatedBeam key={`p${k}`} containerRef={box} fromRef={r} toRef={hub} duration={3} delay={k * 0.3} gradientStartColor="#60a5fa" gradientStopColor="#ffffff" />
+          <AnimatedBeam key={`p${k}`} containerRef={box} fromRef={r} toRef={hub} duration={3} delay={k * 0.3} gradientStartColor="#60a5fa" gradientStopColor={hi} />
         ))}
         {fr.map((r, k) => (
-          <AnimatedBeam key={`f${k}`} containerRef={box} fromRef={hub} toRef={r} duration={3} delay={1.2 + k * 0.3} gradientStartColor="#ffffff" gradientStopColor="#60a5fa" />
+          <AnimatedBeam key={`f${k}`} containerRef={box} fromRef={hub} toRef={r} duration={3} delay={1.2 + k * 0.3} gradientStartColor={hi} gradientStopColor="#60a5fa" />
         ))}
       </div>
     </div>
@@ -511,6 +514,7 @@ export function Compare() {
 /* 11 — One attack, three defenses */
 export function Scenario() {
   const s = S[10]
+  const hi = useIsDark() ? '#ffffff' : '#111119'
   const c = s.contenido
   const box = useRef<HTMLDivElement>(null)
   const atk = useRef<HTMLDivElement>(null)
@@ -549,8 +553,8 @@ export function Scenario() {
             <div ref={ns} className="absolute right-[230px] bottom-[24px] z-10 rounded-xl border border-scan/40 bg-panel px-4 py-1"><Logo brand="tenable" size={36} /></div>
             <AnimatedBeam containerRef={box} fromRef={atk} toRef={fw} duration={2} gradientStartColor="#ff3d71" gradientStopColor="#ff3d71" pathColor="#ff3d71" />
             <AnimatedBeam containerRef={box} fromRef={fw} toRef={srv} duration={3} delay={0.8} curvature={-30} gradientStartColor="#2ee6d6" gradientStopColor="#2ee6d6" />
-            <AnimatedBeam containerRef={box} fromRef={r7} toRef={srv} duration={3.5} curvature={60} gradientStartColor="#a78bfa" gradientStopColor="#ffffff" />
-            <AnimatedBeam containerRef={box} fromRef={ns} toRef={srv} duration={3.5} delay={1} curvature={30} gradientStartColor="#60a5fa" gradientStopColor="#ffffff" />
+            <AnimatedBeam containerRef={box} fromRef={r7} toRef={srv} duration={3.5} curvature={60} gradientStartColor="#a78bfa" gradientStopColor={hi} />
+            <AnimatedBeam containerRef={box} fromRef={ns} toRef={srv} duration={3.5} delay={1} curvature={30} gradientStartColor="#60a5fa" gradientStopColor={hi} />
           </div>
         </Reveal>
       </div>
@@ -580,7 +584,6 @@ export function Depth() {
   const s = S[11]
   const layers = s.contenido.capas!
   const col = ['var(--color-fg)', DEF, 'var(--color-assess)', 'var(--color-scan)', 'var(--color-fg)']
-  const hex = ['#ececf4', '#2ee6d6', '#a78bfa', '#60a5fa', '#ececf4']
   return (
     <Slide n={12} part="ps">
       <div className="grid h-full grid-cols-[760px_1fr] gap-16">
@@ -591,7 +594,7 @@ export function Depth() {
               const r = 90 + k * 68
               return (
                 <OrbitingCircles key={k} radius={r} duration={18 + k * 6} reverse={k % 2 === 1} delay={k * 3} className="size-[16px] border-none" path>
-                  <span className="block size-[12px] rounded-full" style={{ background: hex[k], boxShadow: `0 0 18px ${hex[k]}` }} />
+                  <span className="block size-[12px] rounded-full" style={{ background: col[k], boxShadow: `0 0 18px ${col[k]}` }} />
                 </OrbitingCircles>
               )
             })}

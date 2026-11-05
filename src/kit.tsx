@@ -137,7 +137,7 @@ export function Node({ children, color = 'var(--color-fg)', className, ref }: { 
   )
 }
 
-// Logos ship dark-on-transparent; rendered mono-white for the dark deck.
+// Logos ship dark-on-transparent; rendered mono-white on dark, mono-black on light (--logo-filter).
 // Heights compensate for each PNG's built-in padding so they read at equal weight.
 const logos = {
   cisco: { file: 'cisco-logo.png', h: 1 },
@@ -153,7 +153,7 @@ export function Logo({ brand, size = 56, className }: { brand: Brand; size?: num
       src={`${import.meta.env.BASE_URL}logos/${l.file}`}
       alt={brand}
       draggable={false}
-      className={cn('w-auto object-contain [filter:brightness(0)_invert(1)]', className)}
+      className={cn('w-auto object-contain [filter:var(--logo-filter)]', className)}
       style={{ height: size * l.h }}
     />
   )

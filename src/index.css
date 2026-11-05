@@ -50,10 +50,28 @@
   }
 }
 
+/* Light theme: active when <html> lacks the `dark` class (toggled in App.tsx).
+   Accents are darkened so text and outlines keep contrast on white. */
+html:not(.dark) {
+  --color-ink: #f5f5f8;
+  --color-panel: #ffffff;
+  --color-line: #dcdce6;
+  --color-fg: #111119;
+  --color-dim: #5b5b70;
+  --color-faint: #8585a0;
+  --color-defense: #0f766e;
+  --color-threat: #e11d48;
+  --color-assess: #7c3aed;
+  --color-ember: #c2410c;
+  --color-scan: #2563eb;
+  --logo-filter: brightness(0);
+}
+
 :root {
   --white: #fff;
   --black: #000;
   --transparent: transparent;
+  --logo-filter: brightness(0) invert(1);
   --aurora-1: #2ee6d6;
   --aurora-2: #6d5dfc;
   --aurora-3: #22d3ee;
@@ -71,7 +89,7 @@
 html, body, #root { height: 100%; }
 body {
   margin: 0;
-  background: #000;
+  background: var(--color-ink);
   color: var(--color-fg);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;

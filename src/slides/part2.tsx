@@ -46,7 +46,7 @@ export function BOCover() {
             <div className="outline-text mt-4 font-mono text-[150px] leading-none font-bold tracking-[-0.04em] text-fg/40">{year}</div>
           </Reveal>
           <Reveal delay={0.25} className="mt-10">
-            <TextShimmer as="p" duration={3} className="text-[40px] font-medium [--base-color:#8b8ba3] [--base-gradient-color:#ff8a3d] dark:[--base-color:#8b8ba3] dark:[--base-gradient-color:#ff8a3d]">
+            <TextShimmer as="p" duration={3} className="text-[40px] font-medium [--base-color:var(--color-dim)] [--base-gradient-color:var(--color-ember)] dark:[--base-color:#8b8ba3] dark:[--base-gradient-color:#ff8a3d]">
               {s.subtitulo!}
             </TextShimmer>
           </Reveal>
